@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RateOnline</title>
+</head>
+
+<body>
+<main class="main">
+
+    <div class="container avorization-container">
+        <img class="logo" src="{% static 'img/logo.png' %}" alt="Логотип">
+        <h1 class="welcome-title">Добрый день!</h1>
+        <form method="post" class="avtorization__form confirmation__form">
+            {% csrf_token %}
+            <label class="avtorization__label confirmation__label" for="message-code">Введите свой код из сообщения,
+                чтобы
+                войти</label>
+            <input name="password" class="avtorization__input confirmation-input" type="text" id="message-code"
+                   placeholder="Код из сообщения What’s Up">
+            <input type="hidden" name="phone" value="{{phone}}">
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <button type="submit" class="avtorization__button">ВОЙТИ</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

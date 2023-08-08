@@ -1,0 +1,66 @@
+from django.contrib import admin
+from .models import *
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    pass
+
+
+class NominationAttributeInline(admin.TabularInline):
+    model = NominationAttribute
+
+
+@admin.register(Nomination)
+class NominationAdmin(admin.ModelAdmin):
+    inlines = [NominationAttributeInline]
+
+
+@admin.register(NominationAttribute)
+class NominationAttributeAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Member)
+class MemberAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(EventCategory)
+class EventCategoryAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(CategoryNomination)
+class CategoryNominationAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(MemberNomination)
+class MemberNominationAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(WinnerNomination)
+class WinnerNominationAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(WinnerCategory)
+class WinnerCategoryAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(EventStaff)
+class EventStaffAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Result)
+class ResultAdmin(admin.ModelAdmin):
+    pass

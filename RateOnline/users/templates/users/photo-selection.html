@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RateOnline</title>
+</head>
+<body>
+<main class="main">
+    <div class="checkMark">
+        <div>
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+            <h1 class="checkMark-title">Успешно!</h1>
+        </div>
+    </div>
+    <div class="container avorization-container">
+        <img class="logo" src="{% static 'img/logo.png' %}" alt="Логотип">
+        <h1 class="welcome-title">Красота!</h1>
+        <form method="post" enctype="multipart/form-data" class="avtorization__form photo-selection__form">
+            {% csrf_token %}
+            <label class="avtorization__label photo-selection__label">Загрузите ваше лучшее фото Профиля</label>
+            <img id="image" style="border-radius: 80%;">
+            <label class="input-file">
+                <input id="myuploader" name="image" type="file">
+                <span>Выбрать Фото</span>
+            </label>
+            <button type="submit" class="avtorization__button">ПРОДОЛЖИТЬ</button>
+        </form>
+    </div>
+</main>
+<script src="{% static 'js/checkMark.js' %}"></script>
+<script>
+
+document.querySelector('#myuploader').addEventListener('change', () => resize())
+    function resize(){
+  const resize_width = 110;
+
+  const item = document.querySelector('#myuploader').files[0];
+
+  const reader = new FileReader();
+
+  reader.readAsDataURL(item);
+  reader.name = item.name;
+  reader.size = item.size;
+  reader.onload = function(event) {
+    const img = new Image();
+    img.src = event.target.result;
+    img.name = event.target.name;
+    img.size = event.target.size;
+    img.onload = function(el) {
+      const elem = document.createElement('canvas');
+
+      elem.width = resize_width;
+      elem.height = resize_width;
+
+      const ctx = elem.getContext('2d');
+      ctx.drawImage(el.target, 0, 0, elem.width, elem.height);
+
+      const srcEncoded = ctx.canvas.toDataURL('image/jpeg', 1);
+
+      document.querySelector('#image').src = srcEncoded;
+
+    }
+  }
+}
+
+</script>
+</body>
+</html>

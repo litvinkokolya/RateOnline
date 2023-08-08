@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оценка участника</title>
+</head>
+
+<body>
+<main class="main">
+    <div class="container">
+        <a href="{% url 'referee_page' %}" class="go-back go-back-assessment">
+            Назад
+        </a>
+        <h1 class="assessment__title">Оцените участника</h1>
+        <ul class="assessment__before-after_list">
+            <li class="before-after__item">
+                <span>ДО</span>
+                <div>
+                    <figure>
+                        <img src="{{ job.photo_1.url }}">
+                        <figcaption>лицо</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="{{ job.photo_2.url }}">
+                        <figcaption>зона ПМ</figcaption>
+                    </figure>
+                </div>
+            </li>
+            <li class="before-after__item">
+                <span>ПОСЛЕ</span>
+                <div>
+                    <figure>
+                        <img src="{{ job.photo_3.url }}">
+                        <figcaption>лицо</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="{{ job.photo_4.url }}">
+                        <figcaption>зона ПМ</figcaption>
+                    </figure>
+                </div>
+            </li>
+        </ul>
+        <!--    БРОВИ ГРАДИЕНТ УБРАТЬ И ПОМЕНЯТЬ НА ЗАПРОС С БД. ДЕЛАТЬ ДВА ЗАПРОСА?    -->
+        <h2 class="assessment__service">{{job.category_nomination.nomination.name}}
+            {{job.category_nomination.event_category.category.name}}</h2>
+        <form class="evaluations-form" action="" method="post">
+            {% csrf_token %}
+            <div class="judge-modal visually-hidden">
+                <button class="close-judge-modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
+                        <path d="M1.35492 14.438L14.938 0.85491M1.35352 0.646484L14.9366 14.2296" stroke="black"
+                              stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <div class="before-after__item">
+                    <span>ПОСЛЕ</span>
+                    <div>
+                        <figure>
+                            <img src="{% static 'img/germiona.png' %}">
+                            <figcaption>лицо</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="{% static 'img/germiona.png' %}">
+                            <figcaption>брови</figcaption>
+                        </figure>
+                    </div>
+                </div>
+                <h2 class="assessment__service" style="margin-top: 10px;">Брови Градиент МАСТЕР</h2>
+                <p class="total-points" style="margin-top: -15px;">Сумма баллов: <span id="ballsModal">27</span></p>
+                <p class="total-points" style="margin-top: -15px;">Дать комментарий <a href="#"><img
+                        class="whatsApp-logo"
+                        src="{% static 'img/whatsApp.png' %}"></a>
+                </p>
+                <button id="send" type="submit" class="total-points-button">Отправить</button>
+            </div>
+            <ul class="evaluations-list">
+                {% for attribute in attributes %}
+                <li class="evaluations-item">
+                    <p class="evaluations-name">{{attribute.name}}</p>
+                    <div class="evaluations-block">
+                        {% with ''|center:attribute.max_score as range %}
+                        {% for _ in range %}
+                        <label>
+                            {% if attribute.name != 'Работа со сложностью' %}
+                            <input required class="evulation-radio visually-hidden" value="{{forloop.counter}}"
+                                   type="radio"
+                                   name="{{attribute.name}}">
+                            <span>{{forloop.counter}}</span>
+                            {% else %}
+                            <input required class="evulation-radio visually-hidden evaluation--complexity"
+                                   value="{{forloop.counter0}}"
+                                   type="radio"
+                                   name="{{attribute.name}}">
+                            <span>{{forloop.counter0}}</span>
+                            {% endif %}
+                        </label>
+                        {% endfor %}
+                        {% endwith %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <p class="total-points">Сумма баллов: <span id="balls">0</span></p>
+            <button type="submit" class="total-points-button open-modal">Подтвердить</button>
+        </form>
+    </div>
+
+    <div class="blur visually-hidden"></div>
+</main>
+<script> document.querySelector('#send').addEventListener('click', function(){
+        var elem = document.querySelector('#ballsForm');
+      console.log(elem)
+      document.querySelector('#ballsForm').value = calc.summ
+      })
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="{% static 'js/judge-modal.js' %}"></script>
+</body>
+
+</html>

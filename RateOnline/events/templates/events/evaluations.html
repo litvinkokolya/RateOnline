@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/normilize.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Результаты</title>
+</head>
+
+<body>
+<main class="main">
+    <div class="container">
+        <a href="master-page.html" class="go-back">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="16" viewBox="0 0 26 16" fill="none">
+                <path d="M0.292892 7.29289C-0.0976315 7.68342 -0.0976315 8.31658 0.292892 8.70711L6.65685 15.0711C7.04738 15.4616 7.68054 15.4616 8.07107 15.0711C8.46159 14.6805 8.46159 14.0474 8.07107 13.6569L2.41421 8L8.07107 2.34315C8.46159 1.95262 8.46159 1.31946 8.07107 0.928932C7.68054 0.538408 7.04738 0.538408 6.65685 0.928932L0.292892 7.29289ZM26 7L1 7V9L26 9V7Z"
+                      fill="black"/>
+            </svg>
+        </a>
+        <h1 class="assessment__title">Оценки судей</h1>
+        <ul class="assessment__before-after_list">
+            <li class="before-after__item">
+                <span>ДО</span>
+                <div>
+                    <figure>
+                        <img src="img/germiona.png">
+                        <figcaption>лицо</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="img/germiona.png">
+                        <figcaption>зона ПМ</figcaption>
+                    </figure>
+                </div>
+            </li>
+            <li class="before-after__item">
+                <span>ПОСЛЕ</span>
+                <div>
+                    <figure>
+                        <img src="img/germiona.png">
+                        <figcaption>лицо</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="img/germiona.png">
+                        <figcaption>зона ПМ</figcaption>
+                    </figure>
+                </div>
+            </li>
+        </ul>
+        <h2 class="assessment__service">{{job.category_nomination.nomination.name}}
+            {{job.category_nomination.event_category.category.name}}</h2>
+        <form method="post" class="evaluations-form">
+            <ul class="evaluations-list evaluation-judge-list">
+                <li class="evaluations-item">
+                    <p class="evaluations-name">Симметрия формы</p>
+                    <div class="evaluations-block">
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Симметрия формы">
+                            <span>1</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Симметрия формы">
+                            <span>2</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Симметрия формы">
+                            <span>3</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Симметрия формы">
+                            <span>4</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Симметрия формы">
+                            <span>5</span>
+                        </label>
+                    </div>
+                </li>
+                <li class="evaluations-item">
+                    <p class="evaluations-name">Актуальность
+                        Плотности</p>
+                    <div class="evaluations-block">
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Актуальность Плотности">
+                            <span>1</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Актуальность Плотности">
+                            <span>2</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Актуальность Плотности">
+                            <span>3</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Актуальность Плотности">
+                            <span>4</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Актуальность Плотности">
+                            <span>5</span>
+                        </label>
+                    </div>
+                </li>
+                <li class="evaluations-item">
+                    <p class="evaluations-name">Актуальность цвета</p>
+                    <div class="evaluations-block">
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Актуальность цвета">
+                            <span>1</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Актуальность цвета">
+                            <span>2</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Актуальность цвета">
+                            <span>3</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Актуальность цвета">
+                            <span>4</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Актуальность цвета">
+                            <span>5</span>
+                        </label>
+                    </div>
+                </li>
+                <li class="evaluations-item">
+                    <p class="evaluations-name">Гармония формы</p>
+                    <div class="evaluations-block">
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Гармония формы">
+                            <span>1</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Гармония формы">
+                            <span>2</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Гармония формы">
+                            <span>3</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Гармония формы">
+                            <span>4</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Гармония формы">
+                            <span>5</span>
+                        </label>
+                    </div>
+                </li>
+                <li class="evaluations-item">
+                    <p class="evaluations-name">Равномерность Прокраса</p>
+                    <div class="evaluations-block">
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Равномерность Прокраса">
+                            <span>1</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Равномерность Прокраса">
+                            <span>2</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Равномерность Прокраса">
+                            <span>3</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Равномерность Прокраса">
+                            <span>4</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Равномерность Прокраса">
+                            <span>5</span>
+                        </label>
+                    </div>
+                </li>
+                <li class="evaluations-item">
+                    <p class="evaluations-name">Оформление головки</p>
+                    <div class="evaluations-block">
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Оформление головки">
+                            <span>1</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Оформление головки">
+                            <span>2</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Оформление головки">
+                            <span>3</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Оформление головки">
+                            <span>4</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Оформление головки">
+                            <span>5</span>
+                        </label>
+                    </div>
+                </li>
+                <li class="evaluations-item">
+                    <p class="evaluations-name">Градиент</p>
+                    <div class="evaluations-block">
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Градиент">
+                            <span>1</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Градиент">
+                            <span>2</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Градиент">
+                            <span>3</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Градиент">
+                            <span>4</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Градиент">
+                            <span>5</span>
+                        </label>
+                    </div>
+                </li>
+                <li class="evaluations-item">
+                    <p class="evaluations-name">Травматизация</p>
+                    <div class="evaluations-block">
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Травматизация">
+                            <span>1</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Травматизация">
+                            <span>2</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Травматизация">
+                            <span>3</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Травматизация">
+                            <span>4</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Травматизация">
+                            <span>5</span>
+                        </label>
+                    </div>
+                </li>
+                <li class="evaluations-item">
+                    <p class="evaluations-name">Сложность работы</p>
+                    <div class="evaluations-block">
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Травматизация">
+                            <span>1</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Травматизация">
+                            <span>0</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Травматизация">
+                            <span>1</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Травматизация">
+                            <span>0</span>
+                        </label>
+                        <label>
+                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio"
+                                   name="Травматизация">
+                            <span>0</span>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+            <ol class="judge-list">
+                <li class="judge-item">
+                    <p>Бальбасова А.А.</p>
+                </li>
+                <li class="judge-item">
+                    <p>Бальбасова А.А.</p>
+                </li>
+                <li class="judge-item">
+                    <p>Бальбасова А.А.</p>
+                </li>
+                <li class="judge-item">
+                    <p>Бальбасова А.А.</p>
+                </li>
+                <li class="judge-item">
+                    <p>Бальбасова А.А.</p>
+                </li>
+            </ol>
+        </form>
+    </div>
+</main>
+
+
+</body>
+
+</html>

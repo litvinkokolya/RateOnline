@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Страница Мастера</title>
+</head>
+
+<body>
+<main class="main">
+    <div class="container">
+        <img class="user-avatar" src="{{ request.user.image.url }}" alt="Аватар Мастера">
+        <p class="user-name">{{request.user.first_name}} {{request.user.last_name}}</p>
+        <h1 class="user-post">{{job.category_nomination.event_category.category.name}}</h1>
+        <p class="user-action">Выберите модель с которой работаете</p>
+        <ul class="masters-list">
+            {% for job in jobs %}
+            <li class="master">
+                <a href="{% url 'upload_photo' pk=job.id %}">
+                    <div>
+                        <span class="master__number">№{{ job.id }}</span>
+                        <div class="master__service-block">
+                            <p class="master__service">{{ job.category_nomination.nomination.name }}
+                                {{job.category_nomination.event_category.category.name}}</p>
+                            <span class="master__scores">
+                                {{ job.result }}б
+                            </span>
+                        </div>
+                        {% if job.photo_1 %}
+                        <div class="master__avatar">
+                            <img class="master__avatar-img" src="{{ job.photo_1.url }}" alt="Фото модели">
+                        </div>
+                        {% else %}
+                        <div class="master__avatar">
+                            <img class="master__avatar-img" src="{% static 'img/unknown-logo.png' %}">
+                        </div>
+                        {% endif %}
+                    </div>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</main>
+
+
+</body>
+
+</html>
