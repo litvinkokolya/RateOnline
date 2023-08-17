@@ -43,7 +43,9 @@ class CategoryNominationAdmin(admin.ModelAdmin):
 
 @admin.register(MemberNomination)
 class MemberNominationAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'member', 'category_nomination', 'photo_1')
+    list_display_links = ('id', 'member', 'category_nomination')
+    ordering = ['id']
 
 
 @admin.register(WinnerNomination)

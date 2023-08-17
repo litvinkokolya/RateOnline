@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="container avorization-container">
-        <img class="logo" src="{% static 'img/logo.png' %}" alt="Логотип">
+        <img class="logo" src="{% static 'img/logo.svg' %}" alt="Логотип">
         <h1 class="welcome-title">Красота!</h1>
         <form method="post" enctype="multipart/form-data" class="avtorization__form photo-selection__form">
             {% csrf_token %}
@@ -73,6 +73,7 @@ document.querySelector('#myuploader').addEventListener('change', () => resize())
     }
   }
 }
+
 
 </script>
 </body>

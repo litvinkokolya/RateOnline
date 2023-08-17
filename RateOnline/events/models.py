@@ -121,7 +121,13 @@ class MemberNomination(models.Model):
         verbose_name_plural = 'Номинации участника'
 
     @property
-    def result(self):
+    def is_done(self):
+        count_referee = self.category_nomination.staffs.count()
+        count_results = self.results.count()
+        return count_results == count_referee
+
+    @property
+    def result_all(self):
         return sum(x.score for x in self.results.all())
 
     def __str__(self) -> str:

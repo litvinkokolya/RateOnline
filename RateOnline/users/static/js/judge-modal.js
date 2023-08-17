@@ -1,25 +1,30 @@
 const closeBtn = document.querySelector('.close-judge-modal');
-const openModelBtn = document.querySelector('.total-points-button.open-modal');
 const modal = document.querySelector('.judge-modal');
 const form = document.querySelector('.evaluations-form');
 const blur = document.querySelector('.blur');
 
-const radio = document.getElementsByClassName('evulation-radio')
-const balls = document.getElementById('balls')
-const ballsModal = document.getElementById('ballsModal')
+const radio = document.getElementsByClassName('evulation-radio');
+const balls = document.getElementById('balls');
+const ballsModal = document.getElementById('ballsModal');
 let numberBalls = 0;
 
 let arr = [];
 
-closeBtn.addEventListener('click', function() {
-  modal.classList.add('visually-hidden');
-  blur.classList.add('visually-hidden')
-});
+window.onload=function(){
+  window.scrollBy(0, 30);
+}
 
-openModelBtn.addEventListener('click', function() {
+form.addEventListener('submit', function(e) {
+console.log('form')
   e.preventDefault();
   modal.classList.remove('visually-hidden');
   blur.classList.remove('visually-hidden')
+});
+
+closeBtn.addEventListener('click', function() {
+console.log('123');
+  modal.classList.add('visually-hidden');
+  blur.classList.add('visually-hidden')
 });
 
 let calc = {

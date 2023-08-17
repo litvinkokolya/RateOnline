@@ -22,20 +22,20 @@
         <img class="upload-photo-background" src="{% static 'img/background-eyebrows.png' %}">
         <h1 class="assessment__title" style="margin: 0">Загрузите фото модели</h1>
         <h2 class="assessment__service">Брови Градиент МАСТЕР</h2>
-        <form method="post" class="upload-photo-form">
+        <form method="post" class="upload-photo-form" enctype="multipart/form-data" action="">
             {% csrf_token %}
             <ul class="assessment__before-after_list">
                 <li class="before-after__item">
                     <span>ДО</span>
                     <div>
                         <label class="upload-photo-input">
-                            {{ form.photo_1 }}
-                            <img src="{% static 'img/unknown-logo-big.png' %}">
+                            <input id="photo_1" type="file" name="photo_1">
+                            <img id="image_1" src="{% static 'img/unknown-logo-big.png' %}">
                             <span>лицо</span>
                         </label>
                         <label class="upload-photo-input">
-                            {{ form.photo_2 }}
-                            <img src="{% static 'img/unknown-logo-big.png' %}">
+                            <input id="photo_2" type="file" name="photo_2">
+                            <img id="image_2" src="{% static 'img/unknown-logo-big.png' %}">
                             <span>зона ПМ</span>
                         </label>
                     </div>
@@ -44,13 +44,13 @@
                     <span>ПОСЛЕ</span>
                     <div>
                         <label class="upload-photo-input">
-                            {{ form.photo_3 id="myuploader" }}
-                            <img src="{% static 'img/unknown-logo-big.png' %}">
+                            <input id="photo_3" type="file" name="photo_3">
+                            <img id="image_3" src="{% static 'img/unknown-logo-big.png' %}">
                             <span>лицо</span>
                         </label>
                         <label class="upload-photo-input">
-                            {{ form.photo_4 }}
-                            <img src="{% static 'img/unknown-logo-big.png' %}">
+                            <input id="photo_4" type="file" name="photo_4">
+                            <img id="image_4" src="{% static 'img/unknown-logo-big.png' %}">
                             <span>зона ПМ</span>
                         </label>
                     </div>
@@ -62,11 +62,12 @@
     </div>
 </main>
 <script>
-document.querySelector('#myuploader').addEventListener('change', () => resize())
+preview = (input, image) => {
+document.querySelector(input).addEventListener('change', () => resize())
     function resize(){
   const resize_width = 110;
 
-  const item = document.querySelector('#myuploader').files[0];
+  const item = document.querySelector(input).files[0];
 
   const reader = new FileReader();
 
@@ -89,12 +90,16 @@ document.querySelector('#myuploader').addEventListener('change', () => resize())
 
       const srcEncoded = ctx.canvas.toDataURL('image/jpeg', 1);
 
-      document.querySelector('#image').src = srcEncoded;
+      document.querySelector(image).src = srcEncoded;
 
     }
   }
 }
-
+}
+preview('#photo_1', '#image_1')
+preview('#photo_2', '#image_2')
+preview('#photo_3', '#image_3')
+preview('#photo_4', '#image_4')
 
 </script>
 </body>

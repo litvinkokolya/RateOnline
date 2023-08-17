@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="{% static 'node_modules\lightbox2\dist\css/lightbox.min.css' %}" rel="stylesheet"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
@@ -24,11 +25,15 @@
                 <span>ДО</span>
                 <div>
                     <figure>
-                        <img src="{{ job.photo_1.url }}">
+                        <a href="{{ job.photo_1.url }}" data-lightbox="after">
+                            <img src="{{ job.photo_1.url }}" alt="">
+                        </a>
                         <figcaption>лицо</figcaption>
                     </figure>
                     <figure>
-                        <img src="{{ job.photo_2.url }}">
+                        <a href="{{ job.photo_2.url }}" data-lightbox="after">
+                            <img src="{{ job.photo_2.url }}" alt="">
+                        </a>
                         <figcaption>зона ПМ</figcaption>
                     </figure>
                 </div>
@@ -37,11 +42,15 @@
                 <span>ПОСЛЕ</span>
                 <div>
                     <figure>
-                        <img src="{{ job.photo_3.url }}">
+                        <a href="{{ job.photo_3.url }}" data-lightbox="after">
+                            <img src="{{ job.photo_3.url }}" alt="">
+                        </a>
                         <figcaption>лицо</figcaption>
                     </figure>
                     <figure>
-                        <img src="{{ job.photo_4.url }}">
+                        <a href="{{ job.photo_4.url }}" data-lightbox="after">
+                            <img src="{{ job.photo_4.url }}" alt="">
+                        </a>
                         <figcaption>зона ПМ</figcaption>
                     </figure>
                 </div>
@@ -50,36 +59,8 @@
         <!--    БРОВИ ГРАДИЕНТ УБРАТЬ И ПОМЕНЯТЬ НА ЗАПРОС С БД. ДЕЛАТЬ ДВА ЗАПРОСА?    -->
         <h2 class="assessment__service">{{job.category_nomination.nomination.name}}
             {{job.category_nomination.event_category.category.name}}</h2>
-        <form class="evaluations-form" action="" method="post">
+        <form class="evaluations-form">
             {% csrf_token %}
-            <div class="judge-modal visually-hidden">
-                <button class="close-judge-modal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
-                        <path d="M1.35492 14.438L14.938 0.85491M1.35352 0.646484L14.9366 14.2296" stroke="black"
-                              stroke-linecap="round"/>
-                    </svg>
-                </button>
-                <div class="before-after__item">
-                    <span>ПОСЛЕ</span>
-                    <div>
-                        <figure>
-                            <img src="{% static 'img/germiona.png' %}">
-                            <figcaption>лицо</figcaption>
-                        </figure>
-                        <figure>
-                            <img src="{% static 'img/germiona.png' %}">
-                            <figcaption>брови</figcaption>
-                        </figure>
-                    </div>
-                </div>
-                <h2 class="assessment__service" style="margin-top: 10px;">Брови Градиент МАСТЕР</h2>
-                <p class="total-points" style="margin-top: -15px;">Сумма баллов: <span id="ballsModal">27</span></p>
-                <p class="total-points" style="margin-top: -15px;">Дать комментарий <a href="#"><img
-                        class="whatsApp-logo"
-                        src="{% static 'img/whatsApp.png' %}"></a>
-                </p>
-                <button id="send" type="submit" class="total-points-button">Отправить</button>
-            </div>
             <ul class="evaluations-list">
                 {% for attribute in attributes %}
                 <li class="evaluations-item">
@@ -108,21 +89,69 @@
                 {% endfor %}
             </ul>
             <p class="total-points">Сумма баллов: <span id="balls">0</span></p>
-            <button type="submit" class="total-points-button open-modal">Подтвердить</button>
+            <button class="total-points-button open-modal">Подтвердить</button>
         </form>
     </div>
-
+    <div class="judge-modal visually-hidden">
+        <button type="button" class="close-judge-modal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
+                <path d="M1.35492 14.438L14.938 0.85491M1.35352 0.646484L14.9366 14.2296" stroke="black"
+                      stroke-linecap="round"/>
+            </svg>
+        </button>
+        <div class="before-after__item">
+            <span>ПОСЛЕ</span>
+            <div>
+                <figure>
+                    <img src="{{ job.photo_3.url }}">
+                    <figcaption>лицо</figcaption>
+                </figure>
+                <figure>
+                    <img src="{{ job.photo_4.url }}">
+                    <figcaption>зона ПМ</figcaption>
+                </figure>
+            </div>
+        </div>
+        <h2 class="assessment__service" style="margin-top: 10px;">{{job.category_nomination.nomination.name}}
+            {{job.category_nomination.event_category.category.name}}</h2>
+        <p class="total-points" style="margin-top: -15px;">Сумма баллов: <span id="ballsModal">27</span></p>
+        <p class="total-points" style="margin-top: -15px;">Дать комментарий <a
+                href="https://api.whatsapp.com/send/?phone={{job.member.user.phone_number}}&text=Добрый день, {{job.member.user.first_name}}!+Я+оценила+вашу+работу.">
+            <img
+                    class="whatsApp-logo"
+                    src="{% static 'img/whatsApp.png' %}"></a>
+        </p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input name="score" id="ballsForm" type="hidden">
+            <button id="send" type="submit" class="total-points-button">Отправить</button>
+        </form>
+    </div>
     <div class="blur visually-hidden"></div>
 </main>
 <script> document.querySelector('#send').addEventListener('click', function(){
-        var elem = document.querySelector('#ballsForm');
-      console.log(elem)
-      document.querySelector('#ballsForm').value = calc.summ
+        var perem = document.querySelector('#ballsForm');
+        var elem = document.querySelector('#ballsModal');
+        perem.value = elem.textContent;
+        console.log(perem.value)
       })
 
+
+
+
+
+
+
+
+
+
+
+
 </script>
+
+<!--<script src="{% static 'node_modules\lightbox2\dist\js\lightbox-plus-jquery.min.js' %}"></script>-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="{% static 'js/judge-modal.js' %}"></script>
+<script src="{% static 'node_modules\lightbox2\dist\js\lightbox.min.js' %}"></script>
 </body>
-
 </html>

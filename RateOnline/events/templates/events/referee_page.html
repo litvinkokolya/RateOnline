@@ -20,21 +20,22 @@
         <p class="user-name">{{request.user.first_name}} {{request.user.last_name}}</p>
         <h1 class="user-post">Судья</h1>
         <p class="user-action">Выберите модель для оценки работы</p>
-        <ul class="masters-list">
+        <ul class="masters-list masters-list--judge">
             {% for job in jobs %}
             <li class="master">
                 <a href="{% url 'referee_assessment' pk=job.id %}">
-                    <div>
+                    <div class="master__content">
                         <span class="master__number">№{{ job.id }}</span>
                         <div class="master__service-block">
                             <p class="master__service">{{ job.category_nomination.nomination.name }}
                                 {{job.category_nomination.event_category.category.name}}</p>
                             <span class="master__scores">
-                                {{job.result}}б.
+                                {{job.result_all}}б.
+                                <!-- НЕПРАВИЛЬНО ПОКАЗЫВАЕТ. НУЖНО ПОКАЗЫВАТЬ РЕЗУЛЬТАТ ЭТОГО СУДЬИ. -->
                             </span>
                         </div>
-                        <div>
-                            <img class="master__avatar" src="{{job.photo_1.url}}" alt="Фото модели">
+                        <div class="master__avatar">
+                            <img class="master__avatar-img" src="{{job.photo_1.url}}" alt="Фото модели">
                         </div>
                     </div>
                 </a>

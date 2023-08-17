@@ -19,18 +19,27 @@
         <img class="user-avatar" src="{{ request.user.image.url }}" alt="Аватар Мастера">
         <p class="user-name">{{request.user.first_name}} {{request.user.last_name}}</p>
         <h1 class="user-post">{{job.category_nomination.event_category.category.name}}</h1>
-        <p class="user-action">Выберите модель с которой работаете</p>
+        <p class="user-action">Выберите модель, с которой работаете</p>
         <ul class="masters-list">
-            {% for job in jobs %}
-            <li class="master">
-                <a href="{% url 'upload_photo' pk=job.id %}">
-                    <div>
+            {% for job in my_jobs %}
+            <li class="master
+            {% if job.is_done %} master--rated{% endif %}">
+                {% if job.is_done %}
+                <a href="{% url 'evaluations' pk=job.id %}">
+                    {% else %}
+                        {% if job.photo_1 %}
+                        <a href="#">
+                        {% else %}
+                        <a href="{% url 'upload_photo' pk=job.id %}">
+                            {% endif %}
+                            {% endif %}
+                    <div class="master__content">
                         <span class="master__number">№{{ job.id }}</span>
                         <div class="master__service-block">
                             <p class="master__service">{{ job.category_nomination.nomination.name }}
                                 {{job.category_nomination.event_category.category.name}}</p>
                             <span class="master__scores">
-                                {{ job.result }}б
+                                {{ job.result_all }}б.
                             </span>
                         </div>
                         {% if job.photo_1 %}
@@ -47,10 +56,29 @@
             </li>
             {% endfor %}
         </ul>
+     <p class="user-action">Работы других мастеров</p>
+        <ul class="masters-list masters-list--other">
+            {% for other_job in other_jobs %}
+        <li class="master">
+            <a href="{% url 'evaluations' pk=other_job.id %}">
+                <div class="master__content">
+                    <span class="master__number">№{{other_job.id}}</span>
+                    <div class="master__service-block">
+                        <p class="master__service">{{ other_job.category_nomination.nomination.name }}
+                                {{other_job.category_nomination.event_category.category.name}}</p>
+                        <span class="master__scores">
+                                {{ other_job.result_all }}б.
+                            </span>
+                    </div>
+                    <div class="master__avatar">
+                        <img class="master__avatar-img" src="{{ other_job.photo_1.url }}" alt="Фото модели">
+                    </div>
+                </div>
+            </a>
+        </li>
+            {% endfor %}
+      </ul>
     </div>
 </main>
-
-
 </body>
-
 </html>

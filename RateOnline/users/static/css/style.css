@@ -35,6 +35,22 @@ h1,h2,h3,h4,h5,h6,p,ul {
 }
 
 .visually-hidden {
+  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  -webkit-clip-path: inset(100%);
+          clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.close-modal {
+  display: none;
   position: absolute;
   width: 1px;
   height: 1px;
@@ -96,7 +112,7 @@ body {
 
 /* MODIFIER */
 
-.master--rated > a > div{
+.master--rated .master__content{
   width: 100%;
   border-radius: 5px;
   background: rgba(189, 255, 173, 0.74);  
@@ -108,7 +124,7 @@ body {
   font-size: 24px;
   font-weight: 800;
   color: #959595;
-  margin: 20px;
+  margin: 45px 20px 20px;
 }
 
 main {
@@ -119,6 +135,7 @@ main {
 }
 
 .logo {
+
   margin-top: 100px;
 }
 
@@ -324,7 +341,7 @@ main {
 .master__avatar-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;	
+  object-fit: cover;
   border-radius: 50%;
 }
 
@@ -349,7 +366,7 @@ main {
 }
 
 .masters-list {
-  margin-top: 21px;
+  margin-top: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -358,6 +375,48 @@ main {
       -ms-flex-direction: column;
           flex-direction: column;
   width: 100%;
+  max-height: 285px;
+  overflow-y: scroll;
+  margin-bottom: 25px;
+  padding-right: 5px;
+}
+
+.masters-list--other{
+max-height:217px;
+}
+
+.masters-list::-webkit-scrollbar {
+  display: block;
+  width: 12px;
+}
+
+.masters-list::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: #ff3e9ba6;
+  box-shadow: 0px 2px 5px 0px rgba(255, 0, 138, 0.50);
+}
+
+.masters-list::-webkit-scrollbar-track-piece:end {
+  background: #d0d0d08a;
+  margin-bottom: 50px;
+  border: 0.2px solid #00000010;
+  border-radius: 3px;
+}
+
+.masters-list::-webkit-scrollbar-track-piece:start {
+  background: #d0d0d08a;
+  margin-top: 50px;
+  border: 0.2px solid #00000010;
+  border-radius: 3px;
+}
+
+.masters-list--judge {
+  max-height: none;
+  overflow-y: auto;
+}
+
+.masters-list--other .master__content{
+  background: rgba(219, 173, 255, 0.74);
 }
 
 .master {
@@ -529,6 +588,7 @@ main {
   width: 75px;
   height: 75px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .before-after__item figcaption{
@@ -744,9 +804,10 @@ main {
           flex-direction: column;
 }
 .upload-photo-input img {
-	position: relative;
+  position: relative;
   width: 75px;
   height: 75px;
+  border-radius: 50%;
 }
 .upload-photo-input input[type=file] {
 	position: absolute;
