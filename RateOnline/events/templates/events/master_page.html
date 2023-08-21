@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Страница Мастера</title>
+    <title>Мастер</title>
 </head>
 
 <body>
@@ -26,13 +26,13 @@
             {% if job.is_done %} master--rated{% endif %}">
                 {% if job.is_done %}
                 <a href="{% url 'evaluations' pk=job.id %}">
+                {% else %}
+                    {% if job.photo_1 %}
+                        <a>
                     {% else %}
-                        {% if job.photo_1 %}
-                        <a href="#">
-                        {% else %}
                         <a href="{% url 'upload_photo' pk=job.id %}">
-                            {% endif %}
-                            {% endif %}
+                    {% endif %}
+                {% endif %}
                     <div class="master__content">
                         <span class="master__number">№{{ job.id }}</span>
                         <div class="master__service-block">

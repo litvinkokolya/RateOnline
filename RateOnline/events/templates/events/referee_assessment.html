@@ -115,14 +115,17 @@
         <h2 class="assessment__service" style="margin-top: 10px;">{{job.category_nomination.nomination.name}}
             {{job.category_nomination.event_category.category.name}}</h2>
         <p class="total-points" style="margin-top: -15px;">Сумма баллов: <span id="ballsModal">27</span></p>
-        <p class="total-points" style="margin-top: -15px;">Дать комментарий <a
-                href="https://api.whatsapp.com/send/?phone={{job.member.user.phone_number}}&text=Добрый день, {{job.member.user.first_name}}!+Я+оценила+вашу+работу.">
+        <p class="total-points" style="margin-top: -15px;">Дать комментарий <a id="whatsapphref"
+                                                                               href="https://api.whatsapp.com/send/?phone={{job.member.user.phone_number}}&text=Добрый день, {{job.member.user.first_name}}!+Я+оценила+вашу+работу.">
             <img
                     class="whatsApp-logo"
                     src="{% static 'img/whatsApp.png' %}"></a>
         </p>
         <form action="" method="post">
             {% csrf_token %}
+            {% for attribute in attributes %}
+            <input name="{{attribute.name}}" id="{{attribute.name}}" type="hidden">
+            {% endfor %}
             <input name="score" id="ballsForm" type="hidden">
             <button id="send" type="submit" class="total-points-button">Отправить</button>
         </form>
@@ -135,6 +138,8 @@
         perem.value = elem.textContent;
         console.log(perem.value)
       })
+
+
 
 
 

@@ -1,4 +1,6 @@
 from django.contrib import admin
+
+from users.models import User
 from .models import *
 
 
@@ -28,7 +30,10 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(Member)
 class MemberAdmin(admin.ModelAdmin):
-    pass
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(MemberAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['user'].queryset = User.objects.filter(is_staff=False)
+        return form
 
 
 @admin.register(EventCategory)
@@ -60,9 +65,16 @@ class WinnerCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(EventStaff)
 class EventStaffAdmin(admin.ModelAdmin):
-    pass
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(EventStaffAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['user'].queryset = User.objects.filter(is_staff=True)
+        return form
 
 
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin):
     pass
+
+
+admin.site.site_title = 'Админ-панель BeautyRank'
+admin.site.site_header = 'Админ-панель BeautyRank'

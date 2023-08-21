@@ -126,10 +126,6 @@ class MemberNomination(models.Model):
         count_results = self.results.count()
         return count_results == count_referee
 
-    @property
-    def result_all(self):
-        return sum(x.score for x in self.results.all())
-
     def __str__(self) -> str:
         return f"{self.member} --- {self.category_nomination}"
 

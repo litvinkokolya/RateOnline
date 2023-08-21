@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView
@@ -16,11 +16,13 @@ class MasterPageView(LoginRequiredMixin, PhotoRequiredMixin, TemplateView):
         data['my_jobs'] = MemberNomination.objects.select_related('category_nomination__nomination',
                                                                   'category_nomination__event_category__category').filter(
             member__user=self.request.user
-        ).order_by('results__score', 'photo_1')
+        ).order_by('results__score', 'photo_1').annotate(result_all=Sum('results__score', default=0))
+
         data['other_jobs'] = MemberNomination.objects.exclude(
             Q(photo_1=None) | Q(photo_1='') | Q(member__user=self.request.user)).select_related(
             'category_nomination__nomination',
-            'category_nomination__event_category__category').order_by('results__score', 'photo_1')
+            'category_nomination__event_category__category').order_by('results__score', 'photo_1').annotate(
+            result_all=Sum('results__score', default=0))
         return data
 
 
@@ -29,14 +31,13 @@ class RefereePageView(LoginRequiredMixin, PhotoRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['results'] = Result.objects.filter(
-            eventstaff__user=self.request.user
-        )
         data['jobs'] = MemberNomination.objects.exclude(Q(photo_1=None) | Q(photo_1='')).select_related(
             'category_nomination__nomination',
             'category_nomination__event_category__category', ).filter(
             category_nomination__staffs__user=self.request.user,
-        )
+        ).annotate(
+            results_for_staff=Sum('results__score', filter=Q(results__eventstaff__user=self.request.user), default=0),
+        ).order_by('results_for_staff')
         return data
 
 
@@ -83,14 +84,16 @@ class EvaluationsView(TemplateView):
     def get_context_data(self, **kwargs):
         job = MemberNomination.objects.get(pk=self.kwargs['pk'])
         data = super().get_context_data(**kwargs)
-        data['staffs'] = [None, *job.category_nomination.staffs.order_by('user__name')]
-        attributes = job.category_nomination.attributes.all()
-        results = job.results.all().order_by('staff__user__name')
+        data['staffs'] = [None, *job.category_nomination.staffs.order_by('user__first_name')]
+        nomination = job.category_nomination.nomination
+        attributes = NominationAttribute.objects.filter(nomination=nomination).distinct()
+        results = job.results.all().order_by('eventstaff__user__first_name')
         scores = []
         for attribute in attributes:
             score_row = []
             score_row.append(attribute.name)
             for result in results:
+                print(result.score_retail)
                 score_row.append(result.score_retail[attribute.name])
             scores.append(score_row)
         data['scores'] = scores

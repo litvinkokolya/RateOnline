@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Страница судьи</title>
+    <title>Судья</title>
 </head>
 
 <body>
@@ -22,16 +22,19 @@
         <p class="user-action">Выберите модель для оценки работы</p>
         <ul class="masters-list masters-list--judge">
             {% for job in jobs %}
-            <li class="master">
-                <a href="{% url 'referee_assessment' pk=job.id %}">
+            <li class="master {% if job.results_for_staff > 0%} master--rated {% endif %}">
+                {% if job.results_for_staff == 0 %}
+                    <a href="{% url 'referee_assessment' pk=job.id %}">
+                    {% else %}
+                    <a>
+                {% endif %}
                     <div class="master__content">
                         <span class="master__number">№{{ job.id }}</span>
                         <div class="master__service-block">
                             <p class="master__service">{{ job.category_nomination.nomination.name }}
                                 {{job.category_nomination.event_category.category.name}}</p>
                             <span class="master__scores">
-                                {{job.result_all}}б.
-                                <!-- НЕПРАВИЛЬНО ПОКАЗЫВАЕТ. НУЖНО ПОКАЗЫВАТЬ РЕЗУЛЬТАТ ЭТОГО СУДЬИ. -->
+                                {{job.results_for_staff}} б.
                             </span>
                         </div>
                         <div class="master__avatar">
