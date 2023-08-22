@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
+{% load static %}
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css/normilize.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
@@ -27,11 +28,11 @@
                 <span>ДО</span>
                 <div>
                     <figure>
-                        <img src="img/germiona.png">
+                        <img src="{% static 'img/germiona.png' %}">
                         <figcaption>лицо</figcaption>
                     </figure>
                     <figure>
-                        <img src="img/germiona.png">
+                        <img src="{% static 'img/germiona.png' %}">
                         <figcaption>зона ПМ</figcaption>
                     </figure>
                 </div>
@@ -40,11 +41,11 @@
                 <span>ПОСЛЕ</span>
                 <div>
                     <figure>
-                        <img src="img/germiona.png">
+                        <img src="{% static 'img/germiona.png' %}">
                         <figcaption>лицо</figcaption>
                     </figure>
                     <figure>
-                        <img src="img/germiona.png">
+                        <img src="{% static 'img/germiona.png' %}">
                         <figcaption>зона ПМ</figcaption>
                     </figure>
                 </div>

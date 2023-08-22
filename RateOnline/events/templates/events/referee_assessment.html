@@ -25,13 +25,13 @@
                 <span>ДО</span>
                 <div>
                     <figure>
-                        <a href="{{ job.photo_1.url }}" data-lightbox="after">
+                        <a href="{{ job.photo_1.url }}" data-lightbox="before/after">
                             <img src="{{ job.photo_1.url }}" alt="">
                         </a>
                         <figcaption>лицо</figcaption>
                     </figure>
                     <figure>
-                        <a href="{{ job.photo_2.url }}" data-lightbox="after">
+                        <a href="{{ job.photo_2.url }}" data-lightbox="before/after">
                             <img src="{{ job.photo_2.url }}" alt="">
                         </a>
                         <figcaption>зона ПМ</figcaption>
@@ -42,13 +42,13 @@
                 <span>ПОСЛЕ</span>
                 <div>
                     <figure>
-                        <a href="{{ job.photo_3.url }}" data-lightbox="after">
+                        <a href="{{ job.photo_3.url }}" data-lightbox="before/after">
                             <img src="{{ job.photo_3.url }}" alt="">
                         </a>
                         <figcaption>лицо</figcaption>
                     </figure>
                     <figure>
-                        <a href="{{ job.photo_4.url }}" data-lightbox="after">
+                        <a href="{{ job.photo_4.url }}" data-lightbox="before/after">
                             <img src="{{ job.photo_4.url }}" alt="">
                         </a>
                         <figcaption>зона ПМ</figcaption>
@@ -124,28 +124,36 @@
         <form action="" method="post">
             {% csrf_token %}
             {% for attribute in attributes %}
-            <input name="{{attribute.name}}" id="{{attribute.name}}" type="hidden">
+            <input class="attributeValue" name="{{attribute.name}}" id="{{attribute.name}}" type="hidden">
             {% endfor %}
-            <input name="score" id="ballsForm" type="hidden">
             <button id="send" type="submit" class="total-points-button">Отправить</button>
         </form>
     </div>
     <div class="blur visually-hidden"></div>
 </main>
-<script> document.querySelector('#send').addEventListener('click', function(){
-        var perem = document.querySelector('#ballsForm');
-        var elem = document.querySelector('#ballsModal');
-        perem.value = elem.textContent;
-        console.log(perem.value)
+<script>
+<!--      function AttributeValue(){-->
+<!--      console.log('123445')-->
+<!--        var peremm = document.querySelector('input[name="{{attribute.name}}"]').value;-->
+<!--        var elemm = document.getElementById('#{{attribute.name}}');-->
+<!--        console.log(peremm, elemm)-->
+<!--      }-->
+    let a = document.querySelectorAll('.evulation-radio')
+    let b = document.querySelectorAll('.attributeValue')
+
+    for (const i of a) {
+      i.addEventListener('click', () => {
+        for (const j of a) {
+          if (j.checked) {
+            for (const k of b) {
+              if (k.name === j.name) {
+                k.value = `${j.value}`
+              }
+            }
+          }
+        }
       })
-
-
-
-
-
-
-
-
+    }
 
 
 
@@ -153,10 +161,20 @@
 
 
 </script>
-
-<!--<script src="{% static 'node_modules\lightbox2\dist\js\lightbox-plus-jquery.min.js' %}"></script>-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="{% static 'js/judge-modal.js' %}"></script>
-<script src="{% static 'node_modules\lightbox2\dist\js\lightbox.min.js' %}"></script>
+<script src="{% static 'node_modules\lightbox2\dist\js\lightbox-plus-jquery.js' %}"></script>
+<script>
+    lightbox.option({
+  'alwaysShowNavOnTouchDevices': true,
+  'fadeDuration': 0,
+  'imageFadeDuration': 0,
+  'resizeDuration': 0,
+  'wrapAround': true
+})
+
+
+
+</script>
 </body>
 </html>

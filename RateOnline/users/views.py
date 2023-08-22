@@ -1,5 +1,5 @@
 import random
-from smsc_api import *
+import smsc_api as sms
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -26,12 +26,17 @@ class LoginIn(TemplateView):
         phone = request.POST.get('phone')
         if check_phone(phone):
             user = User.objects.filter(phone_number=phone).first()
+            name_user = user.first_name
             if user is None:
                 messages.error(request, 'Такого пользователя нет')
                 return super().get(request)
             random_number = str(random.randint(1000, 9999))
-            # smsc = SMSC()
-            # smsc.send_sms(phone, f'Ваш смс-код: {random_number}', sender='RateOnline')
+            # token = sms.get_token()
+            # print('token=' + token)
+            # message_id = sms.send_sms(token, phone, random_number, name_user)
+            # print('messageId=' + message_id)
+            # status = sms.check_status(token, message_id)
+            # print('status=' + status)
             print(random_number)
             user.set_password(random_number)
             user.save()

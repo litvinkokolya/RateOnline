@@ -93,6 +93,7 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  justify-content: center;
   position: relative;
 }
 
@@ -374,11 +375,11 @@ main {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 100%;
+  width: 395px;
   max-height: 285px;
   overflow-y: scroll;
   margin-bottom: 25px;
-  padding-right: 5px;
+  padding-right: 10px;
 }
 
 .masters-list--other{
@@ -972,4 +973,25 @@ max-height:217px;
     -webkit-box-shadow: inset 0px 0px 0px 30px #fff;
             box-shadow: inset 0px 0px 0px 30px #fff;
   }
+}
+
+.dots-container {
+  position: relative;
+  bottom: 20px;
+}
+
+.dot {
+  cursor: pointer;
+  height: 13px;
+  width: 13px;
+  margin: 0 2px;
+  background: #fff;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color .5s ease;
+}
+
+.dot--active,
+.dot:hover {
+    background: #FF3E9B;
 }

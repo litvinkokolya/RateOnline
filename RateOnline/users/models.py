@@ -12,5 +12,9 @@ class User(AbstractUser):
     class Meta(AbstractUser.Meta):
         pass
 
+    def save(self, *args, **kwargs):
+        self.username = self.phone_number
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.last_name

@@ -17,3 +17,7 @@ class UserCreateForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('username', 'phone_number')
+
+    def save(self, *args, **kwargs):
+        self.username = self.phone_number
+        super().save(*args, **kwargs)
