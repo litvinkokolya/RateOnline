@@ -64,10 +64,10 @@
             </li>
             {% endfor %}
         </ul>
-        {% for other_job in other_jobs %}
-            {% if other_job.is_done %}
      <p class="user-action">Работы других мастеров</p>
         <ul class="masters-list masters-list--other">
+            {% for other_job in other_jobs %}
+            {% if other_job.is_done %}
         <li class="master">
             <a href="{% url 'evaluations' pk=other_job.id %}">
                 <div class="master__content">
