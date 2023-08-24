@@ -77,6 +77,7 @@ body {
   margin: 0 auto; 
   padding: 0;
   min-width: 360px;
+  background: #F3F3F3;
 }
 
 .container {
@@ -103,7 +104,7 @@ body {
   top: 40px;
   text-decoration: none;
   color: #282828;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 500;
 }
 

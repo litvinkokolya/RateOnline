@@ -18,7 +18,7 @@
     <div class="container">
         <img class="user-avatar" src="{{ request.user.image.url }}" alt="Аватар Мастера">
         <p class="user-name">{{request.user.first_name}} {{request.user.last_name}}</p>
-        <h1 class="user-post">{{job.category_nomination.event_category.category.name}}</h1>
+        <h1 class="user-post">Мастер</h1>
         <p class="user-action">Выберите модель, с которой работаете</p>
         <ul class="masters-list">
             {% for job in my_jobs %}
@@ -39,7 +39,15 @@
                             <p class="master__service">{{ job.category_nomination.nomination.name }}
                                 {{job.category_nomination.event_category.category.name}}</p>
                             <span class="master__scores">
-                                {{ job.result_all }}б.
+                                {% if job.result_all == 0 %}
+                                    {% if job.photo_1 %}
+                                        оценивается
+                                    {% else %}
+                                        {{ job.result_all }} б.
+                                    {% endif %}
+                                {% else %}
+                                    {{ job.result_all }} б.
+                                {% endif %}
                             </span>
                         </div>
                         {% if job.photo_1 %}
@@ -59,6 +67,7 @@
      <p class="user-action">Работы других мастеров</p>
         <ul class="masters-list masters-list--other">
             {% for other_job in other_jobs %}
+            {% if other_job.is_done %}
         <li class="master">
             <a href="{% url 'evaluations' pk=other_job.id %}">
                 <div class="master__content">
@@ -76,6 +85,7 @@
                 </div>
             </a>
         </li>
+            {% endif %}
             {% endfor %}
       </ul>
     </div>

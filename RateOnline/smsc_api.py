@@ -33,11 +33,14 @@ def send_sms(token, phone, random_number, name_user):
             headers=dict(Authorization=token),
             json=dict(
                 recipient=phone,
-                type='sms',
+                type='flashcall',
                 payload=dict(
                     # убедитесь, что имя отправителя добавлено в ЛК в разделе Компоненты(https://online.sigmasms.ru/#/components)
                     sender='B-Media',
-                    text=f'Здравствуйте, {name_user}!\nВаш смс-код: {random_number}')))
+                    text=random_number
+                )
+            )
+        )
 
         if response and response.status_code == 200:
             return response.json().get('id')
@@ -48,7 +51,7 @@ def send_sms(token, phone, random_number, name_user):
 
 def check_status(token, message_id):
     '''
-    проверка статуса сообщения
+    Проверка статуса сообщения
     :param token: токен авторизации
     :param message_id: id отправленного сообщения
     :return: статус отправки сообщения

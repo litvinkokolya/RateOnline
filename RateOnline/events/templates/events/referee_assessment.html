@@ -116,7 +116,7 @@
             {{job.category_nomination.event_category.category.name}}</h2>
         <p class="total-points" style="margin-top: -15px;">Сумма баллов: <span id="ballsModal">27</span></p>
         <p class="total-points" style="margin-top: -15px;">Дать комментарий <a id="whatsapphref"
-                                                                               href="https://api.whatsapp.com/send/?phone={{job.member.user.phone_number}}&text=Добрый день, {{job.member.user.first_name}}!+Я+оценила+вашу+работу.">
+                                                                               href="https://api.whatsapp.com/send/?phone={{job.member.user.phone_number}}&text=Добрый день, {{job.member.user.first_name}}!+Я+оценила+вашу+работу+в+номинации+{{job.category_nomination.nomination.name}}.">
             <img
                     class="whatsApp-logo"
                     src="{% static 'img/whatsApp.png' %}"></a>
@@ -132,12 +132,6 @@
     <div class="blur visually-hidden"></div>
 </main>
 <script>
-<!--      function AttributeValue(){-->
-<!--      console.log('123445')-->
-<!--        var peremm = document.querySelector('input[name="{{attribute.name}}"]').value;-->
-<!--        var elemm = document.getElementById('#{{attribute.name}}');-->
-<!--        console.log(peremm, elemm)-->
-<!--      }-->
     let a = document.querySelectorAll('.evulation-radio')
     let b = document.querySelectorAll('.attributeValue')
 
@@ -157,9 +151,6 @@
 
 
 
-
-
-
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="{% static 'js/judge-modal.js' %}"></script>
@@ -172,6 +163,8 @@
   'resizeDuration': 0,
   'wrapAround': true
 })
+
+
 
 
 
