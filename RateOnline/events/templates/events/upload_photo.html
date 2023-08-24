@@ -29,12 +29,12 @@
                     <span>ДО</span>
                     <div>
                         <label class="upload-photo-input">
-                            <input id="photo_1" type="file" name="photo_1">
+                            <input id="photo_1" type="file" name="photo_1" required>
                             <img id="image_1" src="{% static 'img/unknown-logo-big.png' %}">
                             <span>лицо</span>
                         </label>
                         <label class="upload-photo-input">
-                            <input id="photo_2" type="file" name="photo_2">
+                            <input id="photo_2" type="file" name="photo_2" required>
                             <img id="image_2" src="{% static 'img/unknown-logo-big.png' %}">
                             <span>зона ПМ</span>
                         </label>
@@ -44,12 +44,12 @@
                     <span>ПОСЛЕ</span>
                     <div>
                         <label class="upload-photo-input">
-                            <input id="photo_3" type="file" name="photo_3">
+                            <input id="photo_3" type="file" name="photo_3" required>
                             <img id="image_3" src="{% static 'img/unknown-logo-big.png' %}">
                             <span>лицо</span>
                         </label>
                         <label class="upload-photo-input">
-                            <input id="photo_4" type="file" name="photo_4">
+                            <input id="photo_4" type="file" name="photo_4" required>
                             <img id="image_4" src="{% static 'img/unknown-logo-big.png' %}">
                             <span>зона ПМ</span>
                         </label>
@@ -100,6 +100,7 @@ preview('#photo_1', '#image_1')
 preview('#photo_2', '#image_2')
 preview('#photo_3', '#image_3')
 preview('#photo_4', '#image_4')
+
 
 </script>
 </body>
