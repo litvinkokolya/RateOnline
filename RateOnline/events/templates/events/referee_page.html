@@ -23,11 +23,7 @@
         <ul class="masters-list masters-list--judge">
             {% for job in jobs %}
             <li class="master {% if job.results_for_staff > 0%} master--rated {% endif %}">
-                {% if job.results_for_staff == 0 %}
-                    <a href="{% url 'referee_assessment' pk=job.id %}">
-                    {% else %}
-                    <a>
-                {% endif %}
+                <a href="{% url 'referee_assessment' pk=job.id %}">
                     <div class="master__content">
                         <span class="master__number">№{{ job.id }}</span>
                         <div class="master__service-block">

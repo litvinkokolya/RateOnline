@@ -64,6 +64,7 @@
             </li>
             {% endfor %}
         </ul>
+        {% if other_jobs %}
      <p class="user-action">Работы других мастеров</p>
         <ul class="masters-list masters-list--other">
             {% for other_job in other_jobs %}
@@ -88,6 +89,7 @@
             {% endif %}
             {% endfor %}
       </ul>
+        {% endif %}
     </div>
 </main>
 </body>

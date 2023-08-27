@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+{% load event_helpers %}
 {% load static %}
 <head>
     <meta charset="utf-8">
@@ -72,12 +73,18 @@
                             {% if attribute.name != 'Работа со сложностью' %}
                             <input required class="evulation-radio visually-hidden" value="{{forloop.counter}}"
                                    type="radio"
+                                   {% if job.results_for_staff %}
+                                   {% get_score scores.score_retail attribute.name forloop.counter %}
+                                   {% endif %}
                                    name="{{attribute.name}}">
                             <span>{{forloop.counter}}</span>
                             {% else %}
                             <input required class="evulation-radio visually-hidden evaluation--complexity"
                                    value="{{forloop.counter0}}"
                                    type="radio"
+                                   {% if job.results_for_staff %}
+                                   {% get_score scores.score_retail attribute.name forloop.counter0 %}
+                                   {% endif %}
                                    name="{{attribute.name}}">
                             <span>{{forloop.counter0}}</span>
                             {% endif %}
@@ -89,7 +96,9 @@
                 {% endfor %}
             </ul>
             <p class="total-points">Сумма баллов: <span id="balls">0</span></p>
+            {% if job.results_for_staff == 0 %}
             <button class="total-points-button open-modal">Подтвердить</button>
+            {% endif %}
         </form>
     </div>
     <div class="judge-modal visually-hidden">
@@ -151,6 +160,35 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="{% static 'js/judge-modal.js' %}"></script>
@@ -163,6 +201,35 @@
   'resizeDuration': 0,
   'wrapAround': true
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

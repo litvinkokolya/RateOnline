@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 from events.mixins import PhotoRequiredMixin
-from events.models import MemberNomination, Result, NominationAttribute
+from events.models import MemberNomination, Result, NominationAttribute, EventStaff
 from users.models import User
 
 
@@ -65,7 +65,11 @@ class RefereeAssessmentView(TemplateView):
         data['job'] = MemberNomination.objects.exclude(photo_1=None).select_related('category_nomination__nomination',
                                                                                     'category_nomination__event_category__category', ).filter(
             id=self.kwargs['pk']
-        ).first()
+        ).annotate(
+            results_for_staff=Sum('results__score', filter=Q(results__eventstaff__user=self.request.user), default=0),
+        ).order_by('results_for_staff').first()
+        data['scores'] = Result.objects.filter(eventstaff__user=self.request.user,
+                                               membernomination=data['job']).first()
         return data
 
     def post(self, request, *args, **kwargs):
@@ -84,18 +88,17 @@ class EvaluationsView(TemplateView):
     def get_context_data(self, **kwargs):
         job = MemberNomination.objects.get(pk=self.kwargs['pk'])
         data = super().get_context_data(**kwargs)
-        data['staffs'] = [None, *job.category_nomination.staffs.order_by('user__first_name')]
+        data['staffs'] = [None,
+                          *EventStaff.objects.filter(category_nomination__categ__in=[job]).order_by('-user__last_name')]
         nomination = job.category_nomination.nomination
         attributes = NominationAttribute.objects.filter(nomination=nomination).distinct()
-        results = job.results.all().order_by('eventstaff__user__first_name')
+        results = job.results.all().order_by('eventstaff__user__last_name')
         scores = []
         for attribute in attributes:
             score_row = []
-            score_row.append(attribute.name)
             for result in results:
                 print(result.score_retail)
-                score_row.append(result.score_retail[attribute.name])
-            scores.append(score_row)
+                score_row.append(result.score_retail[attribute.name][0])
+            scores.append({'values': score_row, 'name': attribute.name})
         data['scores'] = scores
-        print(data)
         return data

@@ -9,6 +9,8 @@ class User(AbstractUser):
                                     help_text="Введите номер телефона пользователя",
                                     verbose_name="Номер телефона")
 
+    REQUIRED_FIELDS = ["phone_number"]
+
     class Meta(AbstractUser.Meta):
         pass
 
@@ -17,4 +19,4 @@ class User(AbstractUser):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.last_name
+        return f'{self.last_name} {self.first_name[0]}.'

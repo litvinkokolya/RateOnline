@@ -124,4 +124,4 @@ MEDIA_URL = 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['http://45.12.72.70', 'http://localhost:8000']
+CSRF_TRUSTED_ORIGINS = ['https://beautyrank.ru', 'http://localhost:8000']
