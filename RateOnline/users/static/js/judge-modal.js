@@ -3,23 +3,50 @@ const modal = document.querySelector('.judge-modal');
 const form = document.querySelector('.evaluations-form');
 const blur = document.querySelector('.blur');
 
-const radio = document.getElementsByClassName('evulation-radio');
+const radio = document.getElementsByClassName('evulation-radio')
 const balls = document.getElementById('balls');
 const ballsModal = document.getElementById('ballsModal');
 let numberBalls = 0;
+let modalBtn = document.querySelector('.open-modal')
 
-let arr = [];
+
 
 window.onload=function(){
   window.scrollBy(0, 30);
 }
+let radioNames = [];
+for (const i of radio) {
+  radioNames.push(i.name)
+  radioNames = [...new Set(radioNames)];
+}
 
-form.addEventListener('submit', function(e) {
-console.log('form')
-  e.preventDefault();
-  modal.classList.remove('visually-hidden');
-  blur.classList.remove('visually-hidden')
-});
+modalBtn.addEventListener('click', function() {
+  let checkRadio = [];
+  for (const i of radio) {
+    i.addEventListener('click', () => {
+      i.closest('div').style.outline = "none";
+    })
+    if (i.checked) {
+      checkRadio.push(i)
+    }
+  }
+  checkRadio.forEach(el => {
+    if (radioNames.includes(el.name)) {
+      radioNames = radioNames.filter(function(f) { return f !== el.name })
+    }
+    });
+    console.log(radioNames);
+    for (const i of radio) {
+      if (radioNames.includes(i.name)) {
+        i.closest('div').style.outline = "1px solid red";
+      }
+    }
+    if (radioNames.length === 0) {
+      modal.classList.remove('visually-hidden');
+      blur.classList.remove('visually-hidden')
+      form.style.background = 'transparent';
+    }
+  });
 
 closeBtn.addEventListener('click', function() {
 console.log('123');

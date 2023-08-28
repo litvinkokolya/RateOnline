@@ -436,7 +436,7 @@ max-height:217px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  gap: 14px;
+  gap: 18px;
   width: 100%;
 }
 .master > a > div{
@@ -465,6 +465,7 @@ max-height:217px;
   color: #FF3E9B;
   font-size: 24px;
   font-weight: 500;
+  width: 40px;
 }
 
 .master__service {
@@ -472,12 +473,16 @@ max-height:217px;
   color: #959595;
   font-size: 14px;
   font-weight: 500;
+  width: 167px;
+  text-align: center;
 }
 
 .master__scores {
   color: #494949;
   font-size: 16px;
   font-weight: 800;
+  width: 167px;
+  text-align: center;
 }
 
 /* ASSESSMENT */
@@ -496,10 +501,9 @@ max-height:217px;
 
 .judge-modal {
   width: 269px;
-  height: 276px;
+  min-height: 276px;
   border-radius: 11px;
-  opacity: 0.8999999761581421;
-  background: var(--light-gray, #D0D0D0);
+  background: #d0d0d0e0;
   position: absolute;
   top: 280px;
   margin-left: auto;
@@ -518,7 +522,7 @@ max-height:217px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding-top: 15px;
+  padding: 15px 0 15px;
 }
 
 .judge-modal .total-points {
@@ -533,6 +537,7 @@ max-height:217px;
 
 .judge-modal .total-points:first-of-type {
   margin-bottom: 20px;
+  padding-right: 3px;
 }
 
 .close-judge-modal {
@@ -553,6 +558,7 @@ max-height:217px;
 }
 
 .assessment__before-after_list {
+  margin-top: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -601,7 +607,7 @@ max-height:217px;
 
 .assessment__title {
   margin-top: 60px;
-  margin-bottom: 21px;
+  margin-bottom: 10px;
   color: #282828;
   font-size: 24px;
   font-weight: 800;
@@ -697,9 +703,6 @@ max-height:217px;
   height: 22px;
 }
 
-.evaluation-judge-list li{
-  height: 25px;
-}
 
 .evaluations-block label:not(:last-of-type) span:last-child::after {
   content: "";
@@ -851,11 +854,9 @@ max-height:217px;
 
 .judge-list {
   list-style: none;
-  margin-top: -20px;
-  margin-left: 150px;
-  -webkit-transform: rotate(90deg);
-      -ms-transform: rotate(90deg);
-          transform: rotate(90deg);
+  margin: 8px;
+  padding: 0;
+  writing-mode: vertical-lr;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -863,6 +864,7 @@ max-height:217px;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  justify-content: flex-end;
   gap: 27px;
   color: #282828;
   font-size: 14px;
@@ -932,6 +934,27 @@ max-height:217px;
           animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
 }
 
+// LIGHTBOX
+
+.dots-container {
+  position: relative;
+  top: 5px;
+}
+
+.dot {
+  height: 13px;
+  width: 13px;
+  margin: 0 2px;
+  background: #fff;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color .5s ease;
+}
+
+.dot--active{
+    background: #FF3E9B;
+}
+
 @-webkit-keyframes stroke {
   100% {
     stroke-dashoffset: 0;
@@ -976,23 +999,4 @@ max-height:217px;
   }
 }
 
-.dots-container {
-  position: relative;
-  bottom: 20px;
-}
 
-.dot {
-  cursor: pointer;
-  height: 13px;
-  width: 13px;
-  margin: 0 2px;
-  background: #fff;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color .5s ease;
-}
-
-.dot--active,
-.dot:hover {
-    background: #FF3E9B;
-}

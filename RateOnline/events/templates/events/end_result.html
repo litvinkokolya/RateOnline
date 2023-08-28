@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конечный результат</title>
+</head>
+
+<body>
+<main class="main">
+    <div class="container">
+        {% for win_job in win_jobs %}
+        <p>{{win_job.category_nomination.nomination.name}}
+            {{win_job.category_nomination.event_category.category.name}}
+            {{win_job.sum_result}}</p>
+        {% endfor %}
+    </div>
+</main>
+</body>
+</html>

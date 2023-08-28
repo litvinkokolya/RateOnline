@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="{% static 'node_modules\lightbox2\dist\css/lightbox.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'lightbox2\dist\css/lightbox.min.css' %}" rel="stylesheet"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
@@ -97,7 +97,9 @@
             </ul>
             <p class="total-points">Сумма баллов: <span id="balls">0</span></p>
             {% if job.results_for_staff == 0 %}
-            <button class="total-points-button open-modal">Подтвердить</button>
+            <button type="button" class="total-points-button open-modal">Подтвердить</button>
+            {% else %}
+            <button style="display: none" type="button" class="total-points-button open-modal">Подтвердить</button>
             {% endif %}
         </form>
     </div>
@@ -112,11 +114,15 @@
             <span>ПОСЛЕ</span>
             <div>
                 <figure>
-                    <img src="{{ job.photo_3.url }}">
+                    <a href="{{ job.photo_3.url }}" data-lightbox="after-model">
+                        <img src="{{ job.photo_3.url }}" alt="">
+                    </a>
                     <figcaption>лицо</figcaption>
                 </figure>
                 <figure>
-                    <img src="{{ job.photo_4.url }}">
+                    <a href="{{ job.photo_4.url }}" data-lightbox="after-model">
+                        <img src="{{ job.photo_4.url }}" alt="">
+                    </a>
                     <figcaption>зона ПМ</figcaption>
                 </figure>
             </div>
@@ -141,6 +147,7 @@
     <div class="blur visually-hidden"></div>
 </main>
 <script>
+
     let a = document.querySelectorAll('.evulation-radio')
     let b = document.querySelectorAll('.attributeValue')
 
@@ -160,78 +167,18 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="{% static 'js/judge-modal.js' %}"></script>
-<script src="{% static 'node_modules\lightbox2\dist\js\lightbox-plus-jquery.js' %}"></script>
+<script src="{% static 'lightbox2\dist\js\lightbox-plus-jquery.js' %}"></script>
 <script>
     lightbox.option({
+  'albumLabel': "%1 %2",
   'alwaysShowNavOnTouchDevices': true,
   'fadeDuration': 0,
   'imageFadeDuration': 0,
   'resizeDuration': 0,
   'wrapAround': true
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
