@@ -65,6 +65,8 @@ class WinnerCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(EventStaff)
 class EventStaffAdmin(admin.ModelAdmin):
+    ordering = ['user']
+
     def get_form(self, request, obj=None, **kwargs):
         form = super(EventStaffAdmin, self).get_form(request, obj, **kwargs)
         form.base_fields['user'].queryset = User.objects.filter(is_staff=True)

@@ -1,11 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q, Sum, Max
-from django.shortcuts import render, redirect
+from django.db.models import Q, Sum, Max, F
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 from events.mixins import PhotoRequiredMixin
-from events.models import MemberNomination, Result, NominationAttribute, EventStaff
-from users.models import User
+from events.models import MemberNomination, Result, NominationAttribute, EventStaff, CategoryNomination, Category
 
 
 class MasterPageView(LoginRequiredMixin, PhotoRequiredMixin, TemplateView):
@@ -16,13 +15,13 @@ class MasterPageView(LoginRequiredMixin, PhotoRequiredMixin, TemplateView):
         data['my_jobs'] = MemberNomination.objects.select_related('category_nomination__nomination',
                                                                   'category_nomination__event_category__category').filter(
             member__user=self.request.user
-        ).annotate(result_all=Sum('results__score', default=0))
+        ).annotate(result_all=Sum('results__score', default=0)).order_by('photo_1', 'result_all')
 
         data['other_jobs'] = MemberNomination.objects.exclude(
             Q(photo_1=None) | Q(photo_1='') | Q(member__user=self.request.user)).select_related(
             'category_nomination__nomination',
             'category_nomination__event_category__category').annotate(
-            result_all=Sum('results__score', default=0))
+            result_all=Sum('results__score', default=0)).order_by('photo_1', 'result_all')
         return data
 
 
@@ -96,7 +95,6 @@ class EvaluationsView(TemplateView):
         for attribute in attributes:
             score_row = []
             for result in results:
-                print(result.score_retail)
                 score_row.append(result.score_retail[attribute.name][0])
             scores.append({'values': score_row, 'name': attribute.name})
         data['scores'] = scores
@@ -109,7 +107,35 @@ class ResultOfAllEvents(TemplateView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['win_jobs'] = MemberNomination.objects.select_related('category_nomination__nomination',
-                                                                   'category_nomination__event_category__category').annotate(
-            sum_result=Sum('results__score', default=0)).order_by('results_for_staff')
+
+        category_nominations = CategoryNomination.objects.all()
+        win_jobs = []
+
+        for category_nomination in category_nominations:
+            member_nominations = MemberNomination.objects.filter(
+                category_nomination=category_nomination
+            ).annotate(
+                result_all=Sum('results__score')
+            ).order_by('-result_all')[:3]
+
+            win_jobs.extend(member_nominations)
+
+        data['win_jobs'] = win_jobs
+
+        win_categories = {}
+        categories = Category.objects.all()
+
+        for category in categories:
+            member_nominations = MemberNomination.objects.filter(category_nomination__event_category__category=category)
+
+            top_three = member_nominations.annotate(total_score=Sum('results__score')).order_by('-total_score')[:3]
+            win_categories[category] = top_three
+
+        data['win_categories'] = win_categories
+
+        # Вычисляем сумму баллов для каждого MemberNomination
+        for category, member_nominations in win_categories.items():
+            for member_nomination in member_nominations:
+                member_nomination.total_score = member_nomination.results.aggregate(Sum('score'))['score__sum']
+
         return data

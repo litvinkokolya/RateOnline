@@ -46,7 +46,11 @@
                                         {{ job.result_all }} б.
                                     {% endif %}
                                 {% else %}
-                                    {{ job.result_all }} б.
+                                    {% if job.is_done %}
+                                        {{ job.result_all }} б.
+                                    {% else %}
+                                        оценивается
+                                    {% endif %}
                                 {% endif %}
                             </span>
                         </div>

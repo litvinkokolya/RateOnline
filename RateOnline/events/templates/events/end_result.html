@@ -15,10 +15,23 @@
 <body>
 <main class="main">
     <div class="container">
+        <h3>Победители номинаций:</h3>
         {% for win_job in win_jobs %}
-        <p>{{win_job.category_nomination.nomination.name}}
-            {{win_job.category_nomination.event_category.category.name}}
-            {{win_job.sum_result}}</p>
+        <h4>{{win_job.category_nomination.nomination.name}}
+            {{win_job.category_nomination.event_category.category.name}}</h4>
+        <p>{{win_job.result_all}}
+            {{win_job.member.user.first_name}}
+            {{win_job.member.user.last_name}}</p>
+        {% endfor %}
+
+        <br><br>
+        {% for category, member_nominations in win_categories.items %}
+        {{ category.name }}
+        {% for member_nomination in member_nominations %}
+        {{ forloop.counter }} место - {{ member_nomination.member.user.first_name }}
+        {{ member_nomination.member.user.last_name }} и {{ member_nomination.total_score }}
+        баллов
+        {% endfor %}
         {% endfor %}
     </div>
 </main>
