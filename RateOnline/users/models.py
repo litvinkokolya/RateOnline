@@ -1,9 +1,10 @@
 from django.contrib.auth.models import AbstractUser
+from django_resized import ResizedImageField
 from django.db import models
 
 
 class User(AbstractUser):
-    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    image = ResizedImageField(size=[500, 300], quality=75, upload_to='images/', null=True, blank=True)
 
     phone_number = models.CharField(max_length=11,
                                     help_text="Введите номер телефона пользователя",
