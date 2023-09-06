@@ -52,7 +52,7 @@ atlassian-ide-plugin.xml
 # Distribution / packaging
 .Python build/
 develop-eggs/
-dist/
+RateOnline/users/static/lightbox/dist/
 downloads/
 eggs/
 .eggs/
