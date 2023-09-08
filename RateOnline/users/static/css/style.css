@@ -73,7 +73,7 @@ button {
 
 body {
   font-family: 'SF Pro Display', sans-serif;
-  margin: 0 auto;
+  margin: 0 auto; 
   padding: 0;
   min-width: 360px;
   background: #F3F3F3;
@@ -82,9 +82,9 @@ body {
 .container {
   padding: 0 15px;
   max-width: 395px;
-  margin: 0 auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  margin: 0 auto; 
+  display: -webkit-box; 
+  display: -ms-flexbox; 
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -116,7 +116,7 @@ body {
 .master--rated .master__content{
   width: 100%;
   border-radius: 5px;
-  background: rgba(189, 255, 173, 0.74);
+  background: rgba(189, 255, 173, 0.74);  
 }
 
 /* MAIN */
@@ -491,7 +491,7 @@ max-height:217px;
   left: 0;
   background: rgba(255, 255, 255, 0.2);
   -webkit-backdrop-filter: blur(1px);
-          backdrop-filter: blur(1px);
+          backdrop-filter: blur(1px); 
   height: 100vh;
   width: 100%;
 }
@@ -525,7 +525,7 @@ max-height:217px;
 .judge-modal .total-points {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  display: flex; 
   width: 200px;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
@@ -632,9 +632,9 @@ max-height:217px;
 .evaluations-item {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
+  display: flex; 
+  -webkit-box-align: center; 
+      -ms-flex-align: center; 
           align-items: center;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
@@ -685,7 +685,7 @@ max-height:217px;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between; 
   padding-bottom: 130px;
 }
 
@@ -721,7 +721,7 @@ max-height:217px;
 .evaluations-item--referee {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  display: flex; 
   justify-content: space-between;
   min-height: 60px;
 }
@@ -729,9 +729,9 @@ max-height:217px;
 .evaluations-item--referee > div{
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
+  display: flex; 
+  -webkit-box-align: center; 
+      -ms-flex-align: center; 
           align-items: center;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
@@ -820,15 +820,15 @@ max-height:217px;
 }
 
 .judge-list {
-  writing-mode: vertical-lr;
+  writing-mode: vertical-lr; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 0 12px;
-  width: 100%;
+  width: 100%; 
 }
 
-.total-points {
+.total-points { 
   margin-top: 18px;
   color: #494949;
   font-size: 16px;
@@ -858,9 +858,9 @@ max-height:217px;
   width: 150px;
   height: 37px;
   border: 0;
-  margin: 0 auto;
-  -webkit-transition: all .1s ease;
-  -o-transition: all .1s ease;
+  margin: 0 auto; 
+  -webkit-transition: all .1s ease; 
+  -o-transition: all .1s ease; 
   transition: all .1s ease;
   text-decoration: none;
   display: -webkit-box;
@@ -999,8 +999,8 @@ max-height:217px;
   stroke-width: 2;
   stroke: #33cccc;
   stroke-miterlimit: 10;
-  margin: 0 auto;
-  -webkit-box-shadow: inset 0px 0px 0px #000;
+  margin: 0 auto; 
+  -webkit-box-shadow: inset 0px 0px 0px #000; 
           box-shadow: inset 0px 0px 0px #000;
   -webkit-animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
           animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;

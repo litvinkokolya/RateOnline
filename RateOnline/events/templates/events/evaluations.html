@@ -65,20 +65,23 @@
             {{job.category_nomination.event_category.category.name}} </h2>
         <div class="evaluations-form">
                <ul class="evaluation-grid">
-                   {% for score in scores %}
                     <li class="evaluations-name-list">
+                         {% for score in scores %}
                         <p class="evaluations-name--referee">{{score.name}}</p>
+                        {% endfor %}
                     </li>
                    <li class="evaluations-list--referee">
                        <ul style="display: table;">
+                           {% for score in scores %}
                            <li class="evaluations-item--referee">
                                <div>
-                                    <div class="evaluations-block">
+                                    <div class="evaluations-block--referee">
                                         {% for value in score.values %}
                                         <label>
                                             <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio">
                                             <span>{{value}}</span>
                                         </label>
+                                        {% endfor %}
                                         {% endfor %}
                                     </div>
                                </div>
@@ -92,26 +95,7 @@
                              </li>
                        </ul>
                    </li>
-<!--                <li class="evaluations-item">-->
-<!--                    <p class="evaluations-name">{{score.name}}</p>-->
-<!--                    <div class="evaluations-block">-->
-<!--                        {% for value in score.values %}-->
-<!--                        <label>-->
-<!--                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio">-->
-<!--                            <span>{{value}}</span>-->
-<!--                        </label>-->
-<!--                        {% endfor %}-->
-<!--                    </div>-->
-<!--                </li>-->
-                {% endfor %}
             </ul>
-<!--            <ol class="judge-list">-->
-<!--                {% for staff in staffs %}-->
-<!--                <li class="judge-item">-->
-<!--                    <p>{{staff.user}}</p>-->
-<!--                </li>-->
-<!--                {% endfor %}-->
-<!--            </ol>-->
         </div>
     </div>
 </main>
