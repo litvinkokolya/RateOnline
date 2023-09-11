@@ -29,12 +29,12 @@
                     <span>ДО</span>
                     <div>
                         <label class="upload-photo-input">
-                            <input id="photo_1" type="file" name="photo_1" required>
+                            <input id="photo_1" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_1" required>
                             <img id="image_1" src="{% static 'img/unknown-logo-big.png' %}">
                             <span>лицо</span>
                         </label>
                         <label class="upload-photo-input">
-                            <input id="photo_2" type="file" name="photo_2" required>
+                            <input id="photo_2" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_2" required>
                             <img id="image_2" src="{% static 'img/unknown-logo-big.png' %}">
                             <span>зона ПМ</span>
                         </label>
@@ -44,64 +44,23 @@
                     <span>ПОСЛЕ</span>
                     <div>
                         <label class="upload-photo-input">
-                            <input id="photo_3" type="file" name="photo_3" required>
+                            <input id="photo_3" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_3" required>
                             <img id="image_3" src="{% static 'img/unknown-logo-big.png' %}">
                             <span>лицо</span>
                         </label>
                         <label class="upload-photo-input">
-                            <input id="photo_4" type="file" name="photo_4" required>
+                            <input id="photo_4" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_4" required>
                             <img id="image_4" src="{% static 'img/unknown-logo-big.png' %}">
                             <span>зона ПМ</span>
                         </label>
                     </div>
                 </li>
             </ul>
-            <input type="submit" href="{% url 'master_page' %}" class="total-points-button upload-photo-button"
-                   value="Подтвердить">
+            <button disabled href="{% url 'master_page' %}" class="total-points-button upload-photo-button">Подтвердить</button>
         </form>
     </div>
 </main>
-<script>
-preview = (input, image) => {
-document.querySelector(input).addEventListener('change', () => resize())
-    function resize(){
-  const resize_width = 110;
-
-  const item = document.querySelector(input).files[0];
-
-  const reader = new FileReader();
-
-  reader.readAsDataURL(item);
-  reader.name = item.name;
-  reader.size = item.size;
-  reader.onload = function(event) {
-    const img = new Image();
-    img.src = event.target.result;
-    img.name = event.target.name;
-    img.size = event.target.size;
-    img.onload = function(el) {
-      const elem = document.createElement('canvas');
-
-      elem.width = resize_width;
-      elem.height = resize_width;
-
-      const ctx = elem.getContext('2d');
-      ctx.drawImage(el.target, 0, 0, elem.width, elem.height);
-
-      const srcEncoded = ctx.canvas.toDataURL('image/jpeg', 1);
-
-      document.querySelector(image).src = srcEncoded;
-
-    }
-  }
-}
-}
-preview('#photo_1', '#image_1')
-preview('#photo_2', '#image_2')
-preview('#photo_3', '#image_3')
-preview('#photo_4', '#image_4')
-
-
-</script>
+    <script src="{% static 'js/inputFileDetermine.js' %}"></script>
+    <script src="{% static 'js/uploadPhotoPreview.js' %}"></script>
 </body>
 </html>
