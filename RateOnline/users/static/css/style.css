@@ -385,6 +385,7 @@ main {
   overflow-y: scroll;
   margin-bottom: 25px;
   padding-right: 10px;
+  width: 100%;
 }
 
 .masters-list--other{
@@ -959,6 +960,52 @@ max-height:217px;
   width: 375px;
   height: 169px;
   margin-bottom: 15px;
+}
+
+/* END RESULT PAGE */
+
+.winners-list {
+    text-align: center;
+    max-height: 500px;
+}
+
+.winners-list h3 + li {
+ border-top: 0;
+}
+
+.winners-list li {
+    border-color: #ff3e9ba6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.winner-balls {
+    font-size: 18px;
+    color: #FF3E9B;
+    font-weight: 700;
+}
+
+.winner-name {
+    font-size: 18px;
+}
+
+.winner-category {
+    font-size: 17px;
+}
+
+.pink-title {
+    font-size: 25px;
+    margin: 7px 0;
+    border-top: 4px solid #ff3e9ba6;
+    text-shadow: 0px 0px 30px #ff3e9ba6;
+    border-radius: 2px;
+    text-align: center;
+    width: 100%;
+}
+
+.winners-list h2 {
+      font-size: 20px;
 }
 
 /* CHECKMARK */
