@@ -110,7 +110,7 @@ class CategoryNomination(models.Model):
 
 
 class MemberNomination(models.Model):
-    member = models.ForeignKey('Member', models.PROTECT)
+    member = models.ForeignKey('Member', models.PROTECT, related_name='membernom')
     photo_1 = ResizedImageField(size=[500, 300], quality=75, null=True, blank=True)
     photo_2 = ResizedImageField(size=[500, 300], quality=75, null=True, blank=True)
     photo_3 = ResizedImageField(size=[500, 300], quality=75, null=True, blank=True)

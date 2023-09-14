@@ -17,17 +17,28 @@
     <div class="container">
         <ul class="masters-list winners-list">
             <h3 class="pink-title">Победители номинаций:</h3>
-            {% for win_job in win_jobs %}
-            <li class="master winner">
-                <h4 class="winner-category">{{win_job.category_nomination.nomination.name}}
-                {{win_job.category_nomination.event_category.category.name}}</h4>
-                <p class="winner-name">{{win_job.member.user.first_name}}
-                {{win_job.member.user.last_name}}</p>
-                <span class="winner-balls">{{win_job.result_all}}</span>
-            </li>
+            {% for nomination, member_nominations in win_nominations.items %}
+
+                <h3 class="pink-title">{{ nomination.nomination.name }}</h3>
+
+                {% for member_nomination in member_nominations %}
+
+                <li class="master winner">
+                    <h2>{{ forloop.counter }} место</h2>
+
+                    <p class="winner-name">
+                    {{ member_nomination.member.user.first_name }}
+                    {{ member_nomination.member.user.last_name }}
+                    </p>
+                    <span class="winner-balls"> {{ member_nomination.total_score }} баллов</span>
+                </li>
+
+                {% endfor %}
+
             {% endfor %}
         </ul>
-        <h3 class="pink-title" style="border: 0">Победители номинаций:</h3>
+
+        <h3 class="pink-title" style="border: 0">Победители Гран-при:</h3>
 
         <ul class="masters-list winners-list">
             {% for category, member_nominations in win_categories.items %}

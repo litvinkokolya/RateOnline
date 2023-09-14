@@ -108,19 +108,16 @@ class ResultOfAllEvents(TemplateView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
 
-        category_nominations = CategoryNomination.objects.all()
-        win_jobs = []
+        win_nominations = {}
+        nominations = CategoryNomination.objects.all()
 
-        for category_nomination in category_nominations:
-            member_nominations = MemberNomination.objects.filter(
-                category_nomination=category_nomination
-            ).annotate(
-                result_all=Sum('results__score')
-            ).order_by('-result_all')[:3]
+        for nomination in nominations:
+            member_nominations = MemberNomination.objects.filter(category_nomination=nomination)
 
-            win_jobs.extend(member_nominations)
+            top_three = member_nominations.annotate(total_score=Sum('results__score')).order_by('-total_score')[:3]
+            win_nominations[nomination] = top_three
 
-        data['win_jobs'] = win_jobs
+        data['win_nominations'] = win_nominations
 
         win_categories = {}
         categories = Category.objects.all()
@@ -132,10 +129,5 @@ class ResultOfAllEvents(TemplateView):
             win_categories[category] = top_three
 
         data['win_categories'] = win_categories
-
-        # Вычисляем сумму баллов для каждого MemberNomination
-        for category, member_nominations in win_categories.items():
-            for member_nomination in member_nominations:
-                member_nomination.total_score = member_nomination.results.aggregate(Sum('score'))['score__sum']
 
         return data
