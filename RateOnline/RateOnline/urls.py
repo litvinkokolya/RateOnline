@@ -24,7 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.LoginIn.as_view(), name='index'),
     path('auth/', include('users.urls')),
-    path('event/', include('events.urls'))
+    path('event/', include('events.urls')),
+    path("__debug__/", include("debug_toolbar.urls"))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

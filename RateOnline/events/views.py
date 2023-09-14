@@ -4,7 +4,8 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 from events.mixins import PhotoRequiredMixin
-from events.models import MemberNomination, Result, NominationAttribute, EventStaff, CategoryNomination, Category
+from events.models import MemberNomination, Result, NominationAttribute, EventStaff, CategoryNomination, Category, \
+    Member
 
 
 class MasterPageView(LoginRequiredMixin, PhotoRequiredMixin, TemplateView):
@@ -108,34 +109,36 @@ class ResultOfAllEvents(TemplateView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
 
-        category_nominations = CategoryNomination.objects.all()
-        win_jobs = []
+        win_nominations = {}
+        nominations = CategoryNomination.objects.all()
+        member_nominations_all = MemberNomination.objects.all().annotate(total_score=Sum('results__score')).order_by(
+            '-total_score')
+        for nomination in nominations:
+            member_nominations = member_nominations_all.filter(category_nomination=nomination)
 
-        for category_nomination in category_nominations:
-            member_nominations = MemberNomination.objects.filter(
-                category_nomination=category_nomination
-            ).annotate(
-                result_all=Sum('results__score')
-            ).order_by('-result_all')[:3]
+            top_three = member_nominations[:3]
+            win_nominations[nomination] = top_three
 
-            win_jobs.extend(member_nominations)
-
-        data['win_jobs'] = win_jobs
+        data['win_nominations'] = win_nominations
 
         win_categories = {}
         categories = Category.objects.all()
 
         for category in categories:
             member_nominations = MemberNomination.objects.filter(category_nomination__event_category__category=category)
-
-            top_three = member_nominations.annotate(total_score=Sum('results__score')).order_by('-total_score')[:3]
+            members = set(member_nominations.values_list('member', flat=True))
+            top_three = []
+            members_all = Member.objects.all()
+            for member in members:
+                total = sum(Result.objects.filter(
+                    membernomination__member=member,
+                    membernomination__category_nomination__event_category__category=category,
+                ).values_list('score', flat=True))
+                top_three.append({'member': members_all.get(pk=member), 'total': total})
+            top_three = sorted(top_three, reverse=True, key=lambda x: x['total'])
+            # top_three = member_nominations.annotate(total_score=Sum('results__score')).order_by('-total_score')[:3]
             win_categories[category] = top_three
 
         data['win_categories'] = win_categories
-
-        # Вычисляем сумму баллов для каждого MemberNomination
-        for category, member_nominations in win_categories.items():
-            for member_nomination in member_nominations:
-                member_nomination.total_score = member_nomination.results.aggregate(Sum('score'))['score__sum']
 
         return data
