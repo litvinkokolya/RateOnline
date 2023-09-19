@@ -126,7 +126,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = env('STATIC_ROOT', default=BASE_DIR / 'static')
-MEDIA_ROOT = env('STATIC_ROOT', default=BASE_DIR / 'media')
+MEDIA_ROOT = env('MEDIA_ROOT', default=BASE_DIR / 'media')
 MEDIA_URL = 'media/'
 
 # Default primary key field type
