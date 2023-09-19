@@ -135,8 +135,7 @@ class ResultOfAllEvents(TemplateView):
                     membernomination__category_nomination__event_category__category=category,
                 ).values_list('score', flat=True))
                 top_three.append({'member': members_all.get(pk=member), 'total': total})
-            top_three = sorted(top_three, reverse=True, key=lambda x: x['total'])
-            # top_three = member_nominations.annotate(total_score=Sum('results__score')).order_by('-total_score')[:3]
+            top_three = sorted(top_three, reverse=True, key=lambda x: x['total'])[:3]
             win_categories[category] = top_three
 
         data['win_categories'] = win_categories
