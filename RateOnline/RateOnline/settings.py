@@ -136,6 +136,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = ['https://beautyrank.ru', 'http://localhost:8000']
 
+DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
+
 INTERNAL_IPS = [
     "127.0.0.1",
 ]

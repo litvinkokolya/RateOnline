@@ -20,11 +20,11 @@
         <h1 class="welcome-title">Добрый день!</h1>
         <form method="post" class="avtorization__form confirmation__form">
             {% csrf_token %}
-            <label class="avtorization__label confirmation__label" for="message-code">Введите свой код из сообщения,
+            <label class="avtorization__label confirmation__label" for="message-code">Введите свой код из звонка,
                 чтобы
                 войти</label>
             <input name="password" class="avtorization__input confirmation-input" type="text" id="message-code"
-                   placeholder="Код из сообщения What’s Up">
+                   placeholder="Код из телефонного звонка">
             <input type="hidden" name="phone" value="{{phone}}">
             {% if messages %}
                 <ul class="messages">
