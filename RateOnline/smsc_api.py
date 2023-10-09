@@ -33,10 +33,10 @@ def send_sms(token, phone, random_number, name_user):
             headers=dict(Authorization=token),
             json=dict(
                 recipient=phone,
-                type='flashcall',
+                type='voice',
                 payload=dict(
                     # убедитесь, что имя отправителя добавлено в ЛК в разделе Компоненты(https://online.sigmasms.ru/#/components)
-                    sender='B-Media',
+                    sender='74956665610',
                     text=random_number
                 )
             )
