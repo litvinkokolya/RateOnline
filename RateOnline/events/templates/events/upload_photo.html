@@ -5,15 +5,12 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <title>Загрузите фото</title>
 </head>
 
-<body>
+<body class="upload-photo-body">
 <main class="main">
     <div class="container upload-photo-container">
         <a href="{% url 'master_page' %}" class="go-back">
@@ -21,21 +18,23 @@
         </a>
         <img class="upload-photo-background" src="{% static 'img/background-eyebrows.png' %}">
         <h1 class="assessment__title" style="margin: 0">Загрузите фото модели</h1>
-        <h2 class="assessment__service">Брови Градиент МАСТЕР</h2>
+        <h2 class="assessment__service">{{job.category_nomination.nomination.name}}
+            {{job.category_nomination.event_category.category.name}}</h2>
         <form method="post" class="upload-photo-form" enctype="multipart/form-data" action="">
             {% csrf_token %}
+            {% if job.category_nomination.nomination.name == "Брови - Градиент" or job.category_nomination.nomination.name == "Перекрытие Бровей" %}
             <ul class="assessment__before-after_list">
                 <li class="before-after__item">
                     <span>ДО</span>
                     <div>
                         <label class="upload-photo-input">
                             <input id="photo_1" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_1" required>
-                            <img id="image_1" src="{% static 'img/unknown-logo-big.png' %}">
+                            <img id="image_1" src="{% static 'img/unknown-logo.svg' %}">
                             <span>лицо</span>
                         </label>
                         <label class="upload-photo-input">
                             <input id="photo_2" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_2" required>
-                            <img id="image_2" src="{% static 'img/unknown-logo-big.png' %}">
+                            <img id="image_2" src="{% static 'img/unknown-logo.svg' %}">
                             <span>зона ПМ</span>
                         </label>
                     </div>
@@ -45,17 +44,51 @@
                     <div>
                         <label class="upload-photo-input">
                             <input id="photo_3" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_3" required>
-                            <img id="image_3" src="{% static 'img/unknown-logo-big.png' %}">
+                            <img id="image_3" src="{% static 'img/unknown-logo.svg' %}">
                             <span>лицо</span>
                         </label>
                         <label class="upload-photo-input">
                             <input id="photo_4" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_4" required>
-                            <img id="image_4" src="{% static 'img/unknown-logo-big.png' %}">
+                            <img id="image_4" src="{% static 'img/unknown-logo.svg' %}">
                             <span>зона ПМ</span>
                         </label>
                     </div>
                 </li>
             </ul>
+                {% else %}
+            <ul class="assessment__before-after_list">
+                <li class="before-after__item">
+                    <span>ДО</span>
+                    <div>
+                        <label class="upload-photo-input">
+                            <input id="photo_1" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_1" required>
+                            <img id="image_1" src="{% static 'img/unknown-logo.svg' %}">
+                            <span>лицо</span>
+                        </label>
+                    </div>
+                </li>
+                <li class="before-after__item">
+                    <span>ПОСЛЕ</span>
+                    <div>
+                           <label class="upload-photo-input">
+                            <input id="photo_2" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_2" required>
+                            <img id="image_2" src="{% static 'img/unknown-logo.svg' %}">
+                            <span>зона ПМ</span>
+                        </label>
+                        <label class="upload-photo-input">
+                            <input id="photo_3" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_3" required>
+                            <img id="image_3" src="{% static 'img/unknown-logo.svg' %}">
+                            <span>лицо</span>
+                        </label>
+                        <label class="upload-photo-input">
+                            <input id="photo_4" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_4" required>
+                            <img id="image_4" src="{% static 'img/unknown-logo.svg' %}">
+                            <span>зона ПМ</span>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+            {% endif %}
             <button disabled href="{% url 'master_page' %}" class="total-points-button upload-photo-button">Подтвердить</button>
         </form>
     </div>

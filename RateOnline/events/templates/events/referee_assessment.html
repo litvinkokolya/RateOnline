@@ -7,20 +7,18 @@
     <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="{% static 'lightbox2\css/lightbox.min.css' %}" rel="stylesheet"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Оценка участника</title>
 </head>
 
-<body>
+<body class="judge-assessment-body">
 <main class="main">
     <div class="container">
         <a href="{% url 'referee_page' %}" class="go-back go-back-assessment">
             Назад
         </a>
         <h1 class="assessment__title">Оцените участника</h1>
+        {% if job.category_nomination.nomination.name == "Брови - Градиент" or job.category_nomination.nomination.name == "Перекрытие Бровей" %}
         <ul class="assessment__before-after_list">
             <li class="before-after__item">
                 <span>ДО</span>
@@ -57,7 +55,44 @@
                 </div>
             </li>
         </ul>
-        <!--    БРОВИ ГРАДИЕНТ УБРАТЬ И ПОМЕНЯТЬ НА ЗАПРОС С БД. ДЕЛАТЬ ДВА ЗАПРОСА?    -->
+        {% else %}
+                <ul class="assessment__before-after_list">
+            <li class="before-after__item">
+                <span>ДО</span>
+                <div>
+                    <figure>
+                        <a href="{{ job.photo_1.url }}" data-lightbox="before/after">
+                            <img src="{{ job.photo_1.url }}" alt="">
+                        </a>
+                        <figcaption>лицо</figcaption>
+                    </figure>
+                </div>
+            </li>
+            <li class="before-after__item">
+                <span>ПОСЛЕ</span>
+                <div>
+                    <figure>
+                        <a href="{{ job.photo_2.url }}" data-lightbox="before/after">
+                            <img src="{{ job.photo_2.url }}" alt="">
+                        </a>
+                        <figcaption>зона ПМ</figcaption>
+                    </figure>
+                    <figure>
+                        <a href="{{ job.photo_3.url }}" data-lightbox="before/after">
+                            <img src="{{ job.photo_3.url }}" alt="">
+                        </a>
+                        <figcaption>лицо</figcaption>
+                    </figure>
+                    <figure>
+                        <a href="{{ job.photo_4.url }}" data-lightbox="before/after">
+                            <img src="{{ job.photo_4.url }}" alt="">
+                        </a>
+                        <figcaption>зона ПМ</figcaption>
+                    </figure>
+                </div>
+            </li>
+        </ul>
+        {% endif %}
         <h2 class="assessment__service">{{job.category_nomination.nomination.name}}
             {{job.category_nomination.event_category.category.name}}</h2>
         <form class="evaluations-form">

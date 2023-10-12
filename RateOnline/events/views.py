@@ -46,6 +46,17 @@ class UploadPhotoView(UpdateView):
     template_name = 'events/upload_photo.html'
     fields = ['photo_1', 'photo_2', 'photo_3', 'photo_4']
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+
+        data['job'] = MemberNomination.objects.exclude(photo_1=None).select_related('category_nomination__nomination',
+                                                                                    'category_nomination__event_category__category', ).filter(
+            id=self.kwargs['pk']
+        ).annotate(
+            results_for_staff=Sum('results__score', filter=Q(results__eventstaff__user=self.request.user), default=0),
+        ).order_by('results_for_staff').first()
+        return data
+
     def get_object(self, queryset=None):
         return MemberNomination.objects.filter(pk=self.kwargs['pk']).first()
 

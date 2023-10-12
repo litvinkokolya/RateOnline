@@ -14,7 +14,7 @@ def check_phone(phone: str):
         return False
     if not phone.isnumeric():
         return False
-    if phone[0] != '7':
+    if phone[0] not in ['7', '8']:
         return False
     return True
 
@@ -26,17 +26,17 @@ class LoginIn(TemplateView):
         phone = request.POST.get('phone')
         if check_phone(phone):
             user = User.objects.filter(phone_number=phone).first()
-            name_user = user.first_name
             if user is None:
                 messages.error(request, 'Такого пользователя нет')
                 return super().get(request)
+            name_user = user.first_name
             random_number = str(random.randint(1000, 9999))
-            token = sms.get_token()
-            print('token=' + token)
-            message_id = sms.send_sms(token, phone, random_number, name_user)
-            print('messageId=' + message_id)
-            status = sms.check_status(token, message_id)
-            print('status=' + status)
+            # token = sms.get_token()
+            # print('token=' + token)
+            # message_id = sms.send_sms(token, phone, random_number, name_user)
+            # print('messageId=' + message_id)
+            # status = sms.check_status(token, message_id)
+            # print('status=' + status)
             print(random_number)
             user.set_password(random_number)
             user.save()

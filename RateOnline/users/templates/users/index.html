@@ -5,14 +5,11 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>BeautyRank</title>
 </head>
 
-<body>
+<body class="first-page-body">
 <main class="main">
     <div class="container avorization-container">
         <img class="logo" src="{% static 'img/logo.svg' %}" alt="Логотип">
@@ -20,11 +17,11 @@
         <form method="post" class="avtorization__form">
             {% csrf_token %}
             <label class="avtorization__label" for="message-code">Введите свой номер телефона, чтобы войти</label>
-            <input name="phone" class="avtorization__input" type="tel" id="message-code" placeholder="79885151555">
+            <input name="phone" class="avtorization__input" type="tel" id="message-code" placeholder="79885151555" pattern="[7-8]{1}[0-9]{10}">
             {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                 {% endfor %}
             </ul>
             {% endif %}

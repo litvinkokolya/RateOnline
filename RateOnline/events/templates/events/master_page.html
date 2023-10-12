@@ -13,7 +13,7 @@
     <title>Мастер</title>
 </head>
 
-<body>
+<body class="master-page-body">
 <main class="main">
     <div class="container">
         <img class="user-avatar" src="{{ request.user.image.url }}" alt="Аватар Мастера">
@@ -60,7 +60,7 @@
                         </div>
                         {% else %}
                         <div class="master__avatar">
-                            <img class="master__avatar-img" src="{% static 'img/unknown-logo.png' %}">
+                            <img class="master__avatar-img" src="{% static 'img/unknown-logo.svg' %}" alt="Фото модели">
                         </div>
                         {% endif %}
                     </div>

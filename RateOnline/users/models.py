@@ -20,6 +20,6 @@ class User(AbstractUser):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        if not self.last_name or self.first_name:
+        if not self.last_name or not self.first_name:
             return self.username
         return f'{self.last_name} {self.first_name[0]}.'

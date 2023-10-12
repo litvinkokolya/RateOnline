@@ -5,23 +5,18 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <title>BeautyRank</title>
 </head>
-<body>
+<body class="photo-selection-body">
 <main class="main">
     <div class="checkMark">
-        <div>
             <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
                 <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                <path class="checkmark__check" stroke="#fff" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
             </svg>
             <h1 class="checkMark-title">Успешно!</h1>
-        </div>
     </div>
     <div class="container avorization-container">
         <img class="logo" src="{% static 'img/logo.svg' %}" alt="Логотип">
@@ -31,7 +26,7 @@
             <label class="avtorization__label photo-selection__label">Загрузите ваше лучшее фото Профиля</label>
             <img id="image" style="border-radius: 80%;">
             <label class="input-file">
-                <input id="myuploader" name="image" type="file">
+                 <input id="myuploader" name="image" type="file" accept="image/jpg, image/jpeg, image/png, image/svg">
                 <span>Выбрать Фото</span>
             </label>
             <button type="submit" class="avtorization__button">ПРОДОЛЖИТЬ</button>

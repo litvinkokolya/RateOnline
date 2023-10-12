@@ -5,14 +5,11 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>BeautyRank</title>
 </head>
 
-<body>
+<body class="confirmation-body">
 <main class="main">
 
     <div class="container avorization-container">
@@ -24,12 +21,12 @@
                 чтобы
                 войти</label>
             <input name="password" class="avtorization__input confirmation-input" type="text" id="message-code"
-                   placeholder="Код из телефонного звонка">
+                   placeholder="Код из телефонного звонка" pattern="[0-9]{4}">
             <input type="hidden" name="phone" value="{{phone}}">
             {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                     {% endfor %}
                 </ul>
             {% endif %}
