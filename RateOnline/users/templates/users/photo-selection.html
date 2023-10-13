@@ -9,14 +9,14 @@
 
     <title>BeautyRank</title>
 </head>
-<body class="photo-selection-body">
+<body class="{% if user_request == staff %}photo-selection-body{% else %} photo-selection-body photo-selection-body--purple {% endif %}">
 <main class="main">
     <div class="checkMark">
-            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                <path class="checkmark__check" stroke="#fff" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-            </svg>
-            <h1 class="checkMark-title">Успешно!</h1>
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark__check" stroke="#fff" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+        <h1 class="checkMark-title">Успешно!</h1>
     </div>
     <div class="container avorization-container">
         <img class="logo" src="{% static 'img/logo.svg' %}" alt="Логотип">
@@ -26,13 +26,14 @@
             <label class="avtorization__label photo-selection__label">Загрузите ваше лучшее фото Профиля</label>
             <img id="image" style="border-radius: 80%;">
             <label class="input-file">
-                 <input id="myuploader" name="image" type="file" accept="image/jpg, image/jpeg, image/png, image/svg">
+                <input id="myuploader" name="image" type="file" accept="image/jpg, image/jpeg, image/png, image/svg">
                 <span>Выбрать Фото</span>
             </label>
-            <button type="submit" class="avtorization__button">ПРОДОЛЖИТЬ</button>
+            <button disabled type="submit" class="avtorization__button">ПРОДОЛЖИТЬ</button>
         </form>
     </div>
 </main>
+<script src="{% static 'js/inputFileDetermine.js' %}"></script>
 <script src="{% static 'js/checkMark.js' %}"></script>
 <script>
 
@@ -68,6 +69,10 @@ document.querySelector('#myuploader').addEventListener('change', () => resize())
     }
   }
 }
+
+
+
+
 
 
 
