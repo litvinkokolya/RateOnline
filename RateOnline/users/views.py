@@ -1,4 +1,6 @@
 import random
+
+from django.db.models import Q
 import smsc_api as sms
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
@@ -25,7 +27,7 @@ class LoginIn(TemplateView):
     def post(self, request):
         phone = request.POST.get('phone')
         if check_phone(phone):
-            user = User.objects.filter(phone_number=phone).first()
+            user = User.objects.filter(Q(phone_number=phone) | Q(phone_number=phone.replace('7', '8', 1))).first()
             if user is None:
                 messages.error(request, 'Такого пользователя нет')
                 return super().get(request)
@@ -70,6 +72,14 @@ class CheckCode(TemplateView):
 class PhotoUpload(UpdateView):
     template_name = 'users/photo-selection.html'
     form_class = UploadImageForm
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.user.is_staff:
+            data['user_request'] = 'staff'
+        else:
+            data['user_request'] = None
+        return data
 
     def get(self, request, *args, **kwargs):
         if request.user.image:
