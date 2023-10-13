@@ -11,7 +11,7 @@
     <title>Результаты</title>
 </head>
 
-<body class="evaluations-body">
+<body class="{% if job.member.user == user_request %}evaluations-body{% else %} evaluations-body evaluations-body--purple {% endif %}">
 <main class="main">
     <div class="container">
         <a href="{% url 'master_page' %}" class="go-back">

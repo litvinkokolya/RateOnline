@@ -111,6 +111,7 @@ class EvaluationsView(TemplateView):
             scores.append({'values': score_row, 'name': attribute.name})
         data['scores'] = scores
         data['job'] = job
+        data['user_request'] = self.request.user
         return data
 
 

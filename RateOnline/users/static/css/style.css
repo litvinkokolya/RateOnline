@@ -160,6 +160,8 @@ body {
   background: linear-gradient(196deg, #FFFFEA 34.9%, #FF55A0 211.19%);
 }
 
+
+
 .evaluations-body main:after {
   content: '';
   width: 0;
@@ -171,6 +173,11 @@ body {
   top: 0;
   position: absolute;
 }
+
+.evaluations-body--purple main:after{
+  border-color: transparent #AC8AC6 transparent transparent;
+}
+
 .container {
   padding: 0 15px;
   max-width: 395px;
@@ -253,6 +260,7 @@ main {
   position: relative;
   width: 290px;
   text-align: center;
+  height: 16px;
 }
 
 .avtorization__input {
