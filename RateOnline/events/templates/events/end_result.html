@@ -16,7 +16,7 @@
             <h3 class="pink-title">Победители номинаций:</h3>
             {% for nomination, member_nominations in win_nominations.items %}
 
-            <h3 class="pink-title">{{ nomination.nomination.name }}</h3>
+            <h3 class="pink-title">{{ nomination.nomination.name }} {{ nomination.event_category.category.name }}</h3>
 
             {% for member_nomination in member_nominations %}
 
