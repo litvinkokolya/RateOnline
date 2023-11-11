@@ -22,18 +22,20 @@
             {{job.category_nomination.event_category.category.name}}</h2>
         <form method="post" class="upload-photo-form" enctype="multipart/form-data" action="">
             {% csrf_token %}
-            {% if job.category_nomination.nomination.name == "Брови - Градиент" or job.category_nomination.nomination.name == "Перекрытие Бровей" %}
+            {% if job.category_nomination.nomination.name in other_nominations %}
             <ul class="assessment__before-after_list">
                 <li class="before-after__item">
                     <span>ДО</span>
                     <div>
                         <label class="upload-photo-input">
-                            <input id="photo_1" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_1" required>
+                            <input id="photo_1" type="file" accept="image/jpg, image/jpeg, image/png, image/svg"
+                                   name="photo_1" required>
                             <img id="image_1" src="{% static 'img/unknown-logo.svg' %}">
                             <span>лицо</span>
                         </label>
                         <label class="upload-photo-input">
-                            <input id="photo_2" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_2" required>
+                            <input id="photo_2" type="file" accept="image/jpg, image/jpeg, image/png, image/svg"
+                                   name="photo_2" required>
                             <img id="image_2" src="{% static 'img/unknown-logo.svg' %}">
                             <span>зона ПМ</span>
                         </label>
@@ -43,25 +45,28 @@
                     <span>ПОСЛЕ</span>
                     <div>
                         <label class="upload-photo-input">
-                            <input id="photo_3" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_3" required>
+                            <input id="photo_3" type="file" accept="image/jpg, image/jpeg, image/png, image/svg"
+                                   name="photo_3" required>
                             <img id="image_3" src="{% static 'img/unknown-logo.svg' %}">
                             <span>лицо</span>
                         </label>
                         <label class="upload-photo-input">
-                            <input id="photo_4" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_4" required>
+                            <input id="photo_4" type="file" accept="image/jpg, image/jpeg, image/png, image/svg"
+                                   name="photo_4" required>
                             <img id="image_4" src="{% static 'img/unknown-logo.svg' %}">
                             <span>зона ПМ</span>
                         </label>
                     </div>
                 </li>
             </ul>
-                {% else %}
+            {% else %}
             <ul class="assessment__before-after_list">
                 <li class="before-after__item">
                     <span>ДО</span>
                     <div>
                         <label class="upload-photo-input">
-                            <input id="photo_1" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_1" required>
+                            <input id="photo_1" type="file" accept="image/jpg, image/jpeg, image/png, image/svg"
+                                   name="photo_1" required>
                             <img id="image_1" src="{% static 'img/unknown-logo.svg' %}">
                             <span>лицо</span>
                         </label>
@@ -70,18 +75,21 @@
                 <li class="before-after__item">
                     <span>ПОСЛЕ</span>
                     <div>
-                           <label class="upload-photo-input">
-                            <input id="photo_2" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_2" required>
+                        <label class="upload-photo-input">
+                            <input id="photo_2" type="file" accept="image/jpg, image/jpeg, image/png, image/svg"
+                                   name="photo_2" required>
                             <img id="image_2" src="{% static 'img/unknown-logo.svg' %}">
                             <span>зона ПМ</span>
                         </label>
                         <label class="upload-photo-input">
-                            <input id="photo_3" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_3" required>
+                            <input id="photo_3" type="file" accept="image/jpg, image/jpeg, image/png, image/svg"
+                                   name="photo_3" required>
                             <img id="image_3" src="{% static 'img/unknown-logo.svg' %}">
                             <span>лицо</span>
                         </label>
                         <label class="upload-photo-input">
-                            <input id="photo_4" type="file" accept="image/jpg, image/jpeg, image/png, image/svg" name="photo_4" required>
+                            <input id="photo_4" type="file" accept="image/jpg, image/jpeg, image/png, image/svg"
+                                   name="photo_4" required>
                             <img id="image_4" src="{% static 'img/unknown-logo.svg' %}">
                             <span>зона ПМ</span>
                         </label>
@@ -89,11 +97,13 @@
                 </li>
             </ul>
             {% endif %}
-            <button disabled href="{% url 'master_page' %}" class="total-points-button upload-photo-button">Подтвердить</button>
+            <button disabled href="{% url 'master_page' %}" class="total-points-button upload-photo-button">
+                Подтвердить
+            </button>
         </form>
     </div>
 </main>
-    <script src="{% static 'js/inputFileDetermine.js' %}"></script>
-    <script src="{% static 'js/uploadPhotoPreview.js' %}"></script>
+<script src="{% static 'js/inputFileDetermine.js' %}"></script>
+<script src="{% static 'js/uploadPhotoPreview.js' %}"></script>
 </body>
 </html>

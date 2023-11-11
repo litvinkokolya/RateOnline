@@ -1,5 +1,5 @@
 # Используй базовый образ Python
-FROM python:3.9
+FROM python:3.10
 
 # Устанавливаем переменную окружения для запуска в режиме "продакшн"
 ENV PYTHONUNBUFFERED 1
@@ -17,4 +17,4 @@ COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
 # Копируем все файлы проекта в контейнер
-COPY . /app/
+COPY  ./RateOnline /app/

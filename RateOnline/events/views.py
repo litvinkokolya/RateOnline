@@ -6,6 +6,7 @@ from django.views.generic import TemplateView, UpdateView
 from events.mixins import PhotoRequiredMixin
 from events.models import MemberNomination, Result, NominationAttribute, EventStaff, CategoryNomination, Category, \
     Member
+from .constants import *
 
 
 class MasterPageView(LoginRequiredMixin, PhotoRequiredMixin, TemplateView):
@@ -55,6 +56,7 @@ class UploadPhotoView(UpdateView):
         ).annotate(
             results_for_staff=Sum('results__score', filter=Q(results__eventstaff__user=self.request.user), default=0),
         ).order_by('results_for_staff').first()
+        data['nominations_with_two_photo'] = nominations_with_two_photo
         return data
 
     def get_object(self, queryset=None):
@@ -81,11 +83,11 @@ class RefereeAssessmentView(TemplateView):
         ).order_by('results_for_staff').first()
         data['scores'] = Result.objects.filter(eventstaff__user=self.request.user,
                                                membernomination=data['job']).first()
+        data['nominations_with_two_photo'] = nominations_with_two_photo
         return data
 
     def post(self, request, *args, **kwargs):
         data = {**request.POST}
-        print(data.pop('csrfmiddlewaretoken'))
         score = sum([int(x[0]) for x in data.values()])
         Result.objects.create(score=score, eventstaff=request.user.eventstaff_set.first(),
                               membernomination_id=self.kwargs['pk'], score_retail=data)
@@ -112,6 +114,7 @@ class EvaluationsView(TemplateView):
         data['scores'] = scores
         data['job'] = job
         data['user_request'] = self.request.user
+        data['nominations_with_two_photo'] = nominations_with_two_photo
         return data
 
 

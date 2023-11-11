@@ -19,115 +19,46 @@
         </a>
         <h1 class="assessment__title">Оценки судей</h1>
         <p class="user-name">Мастер - {{job.member.user.first_name}} {{job.member.user.last_name}}</p>
-        {% if job.category_nomination.nomination.name == "Брови - Градиент" or job.category_nomination.nomination.name == "Перекрытие Бровей" %}
-        <ul class="assessment__before-after_list">
-            <li class="before-after__item">
-                <span>ДО</span>
-                <div>
-                    <figure>
-                        <a href="{{ job.photo_1.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_1.url }}" alt="">
-                        </a>
-                        <figcaption>лицо</figcaption>
-                    </figure>
-                    <figure>
-                        <a href="{{ job.photo_2.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_2.url }}" alt="">
-                        </a>
-                        <figcaption>зона ПМ</figcaption>
-                    </figure>
-                </div>
-            </li>
-            <li class="before-after__item">
-                <span>ПОСЛЕ</span>
-                <div>
-                    <figure>
-                        <a href="{{ job.photo_3.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_3.url }}" alt="">
-                        </a>
-                        <figcaption>лицо</figcaption>
-                    </figure>
-                    <figure>
-                        <a href="{{ job.photo_4.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_4.url }}" alt="">
-                        </a>
-                        <figcaption>зона ПМ</figcaption>
-                    </figure>
-                </div>
-            </li>
-        </ul>
+        {% if job.category_nomination.nomination.name in nominations_with_two_photo %}
+        {% include 'events/widgets/twomainphoto.html' %}
         {% else %}
-                <ul class="assessment__before-after_list">
-            <li class="before-after__item">
-                <span>ДО</span>
-                <div>
-                    <figure>
-                        <a href="{{ job.photo_1.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_1.url }}" alt="">
-                        </a>
-                        <figcaption>лицо</figcaption>
-                    </figure>
-                </div>
-            </li>
-            <li class="before-after__item">
-                <span>ПОСЛЕ</span>
-                <div>
-                     <figure>
-                        <a href="{{ job.photo_2.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_2.url }}" alt="">
-                        </a>
-                        <figcaption>зона ПМ</figcaption>
-                    </figure>
-                    <figure>
-                        <a href="{{ job.photo_3.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_3.url }}" alt="">
-                        </a>
-                        <figcaption>лицо</figcaption>
-                    </figure>
-                    <figure>
-                        <a href="{{ job.photo_4.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_4.url }}" alt="">
-                        </a>
-                        <figcaption>зона ПМ</figcaption>
-                    </figure>
-                </div>
-            </li>
-        </ul>
+        {% include 'events/widgets/onemainphoto.html' %}
         {% endif %}
         <h2 class="assessment__service"> {{job.category_nomination.nomination.name}}
             {{job.category_nomination.event_category.category.name}} </h2>
         <div class="evaluations-form">
-               <ul class="evaluation-grid">
-                    <li class="evaluations-name-list">
-                         {% for score in scores %}
-                        <p class="evaluations-name--referee">{{score.name}}</p>
-                        {% endfor %}
-                    </li>
-                   <li class="evaluations-list--referee">
-                       <ul style="display: table;">
-                           {% for score in scores %}
-                           <li class="evaluations-item--referee">
-                               <div>
-                                    <div class="evaluations-block--referee">
-                                        {% for value in score.values %}
-                                        <label>
-                                            <input disabled class="evulation-radio evaluation-judge visually-hidden" type="radio">
-                                            <span>{{value}}</span>
-                                        </label>
-                                        {% endfor %}
-                                        {% endfor %}
-                                    </div>
-                               </div>
-                           </li>
-                             <li class="judge-list" >
-                                  {% for staff in staffs %}
-                                  <div class="judge-item">
-                                    {{staff.user}}
-                                 </div>
-                                 {% endfor %}
-                             </li>
-                       </ul>
-                   </li>
+            <ul class="evaluation-grid">
+                <li class="evaluations-name-list">
+                    {% for score in scores %}
+                    <p class="evaluations-name--referee">{{score.name}}</p>
+                    {% endfor %}
+                </li>
+                <li class="evaluations-list--referee">
+                    <ul style="display: table;">
+                        {% for score in scores %}
+                        <li class="evaluations-item--referee">
+                            <div>
+                                <div class="evaluations-block--referee">
+                                    {% for value in score.values %}
+                                    <label>
+                                        <input disabled class="evulation-radio evaluation-judge visually-hidden"
+                                               type="radio">
+                                        <span>{{value}}</span>
+                                    </label>
+                                    {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="judge-list">
+                            {% for staff in staffs %}
+                            <div class="judge-item">
+                                {{staff.user}}
+                            </div>
+                            {% endfor %}
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -137,16 +68,13 @@
 <script>
 
     lightbox.option({
-  'albumLabel': "%1 %2",
-  'alwaysShowNavOnTouchDevices': true,
-  'fadeDuration': 0,
-  'imageFadeDuration': 0,
-  'resizeDuration': 0,
-  'wrapAround': true
-})
-
-
-
+        'albumLabel': "%1 %2",
+        'alwaysShowNavOnTouchDevices': true,
+        'fadeDuration': 0,
+        'imageFadeDuration': 0,
+        'resizeDuration': 0,
+        'wrapAround': true
+    })
 
 
 </script>

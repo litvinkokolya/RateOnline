@@ -18,80 +18,10 @@
             Назад
         </a>
         <h1 class="assessment__title">Оцените участника</h1>
-        {% if job.category_nomination.nomination.name == "Брови - Градиент" or job.category_nomination.nomination.name == "Перекрытие Бровей" %}
-        <ul class="assessment__before-after_list">
-            <li class="before-after__item">
-                <span>ДО</span>
-                <div>
-                    <figure>
-                        <a href="{{ job.photo_1.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_1.url }}" alt="">
-                        </a>
-                        <figcaption>лицо</figcaption>
-                    </figure>
-                    <figure>
-                        <a href="{{ job.photo_2.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_2.url }}" alt="">
-                        </a>
-                        <figcaption>зона ПМ</figcaption>
-                    </figure>
-                </div>
-            </li>
-            <li class="before-after__item">
-                <span>ПОСЛЕ</span>
-                <div>
-                    <figure>
-                        <a href="{{ job.photo_3.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_3.url }}" alt="">
-                        </a>
-                        <figcaption>лицо</figcaption>
-                    </figure>
-                    <figure>
-                        <a href="{{ job.photo_4.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_4.url }}" alt="">
-                        </a>
-                        <figcaption>зона ПМ</figcaption>
-                    </figure>
-                </div>
-            </li>
-        </ul>
+        {% if job.category_nomination.nomination.name in nominations_with_two_photo %}
+        {% include 'events/widgets/twomainphoto.html' %}
         {% else %}
-                <ul class="assessment__before-after_list">
-            <li class="before-after__item">
-                <span>ДО</span>
-                <div>
-                    <figure>
-                        <a href="{{ job.photo_1.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_1.url }}" alt="">
-                        </a>
-                        <figcaption>лицо</figcaption>
-                    </figure>
-                </div>
-            </li>
-            <li class="before-after__item">
-                <span>ПОСЛЕ</span>
-                <div>
-                    <figure>
-                        <a href="{{ job.photo_2.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_2.url }}" alt="">
-                        </a>
-                        <figcaption>зона ПМ</figcaption>
-                    </figure>
-                    <figure>
-                        <a href="{{ job.photo_3.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_3.url }}" alt="">
-                        </a>
-                        <figcaption>лицо</figcaption>
-                    </figure>
-                    <figure>
-                        <a href="{{ job.photo_4.url }}" data-lightbox="before/after">
-                            <img src="{{ job.photo_4.url }}" alt="">
-                        </a>
-                        <figcaption>зона ПМ</figcaption>
-                    </figure>
-                </div>
-            </li>
-        </ul>
+        {% include 'events/widgets/onemainphoto.html' %}
         {% endif %}
         <h2 class="assessment__service">{{job.category_nomination.nomination.name}}
             {{job.category_nomination.event_category.category.name}}</h2>
@@ -187,17 +117,17 @@
     let b = document.querySelectorAll('.attributeValue')
 
     for (const i of a) {
-      i.addEventListener('click', () => {
-        for (const j of a) {
-          if (j.checked) {
-            for (const k of b) {
-              if (k.name === j.name) {
-                k.value = `${j.value}`
-              }
+        i.addEventListener('click', () => {
+            for (const j of a) {
+                if (j.checked) {
+                    for (const k of b) {
+                        if (k.name === j.name) {
+                            k.value = `${j.value}`
+                        }
+                    }
+                }
             }
-          }
-        }
-      })
+        })
     }
 
 
@@ -207,16 +137,13 @@
 <script src="{% static 'lightbox2\js\lightbox-plus-jquery.js' %}"></script>
 <script>
     lightbox.option({
-  'albumLabel': "%1 %2",
-  'alwaysShowNavOnTouchDevices': true,
-  'fadeDuration': 0,
-  'imageFadeDuration': 0,
-  'resizeDuration': 0,
-  'wrapAround': true
-})
-
-
-
+        'albumLabel': "%1 %2",
+        'alwaysShowNavOnTouchDevices': true,
+        'fadeDuration': 0,
+        'imageFadeDuration': 0,
+        'resizeDuration': 0,
+        'wrapAround': true
+    })
 
 
 </script>
