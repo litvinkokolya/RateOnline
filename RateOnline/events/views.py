@@ -131,8 +131,9 @@ class ResultOfAllEvents(TemplateView):
         for nomination in nominations:
             member_nominations = member_nominations_all.filter(category_nomination=nomination)
 
-            top_three = member_nominations[:3]
-            win_nominations[nomination] = top_three
+            if member_nominations.exists():
+                top_three = member_nominations[:3]
+                win_nominations[nomination] = top_three
 
         data['win_nominations'] = win_nominations
 

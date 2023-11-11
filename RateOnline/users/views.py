@@ -27,7 +27,7 @@ class LoginIn(TemplateView):
     def post(self, request):
         phone = request.POST.get('phone')
         if check_phone(phone):
-            user = User.objects.filter(Q(phone_number=phone) | Q(phone_number=phone.replace('7', '8', 1))).first()
+            user = User.objects.filter(Q(phone_number=phone) | Q(phone_number=phone.replace('8', '7', 1))).first()
             if user is None:
                 messages.error(request, 'Такого пользователя нет')
                 return super().get(request)
