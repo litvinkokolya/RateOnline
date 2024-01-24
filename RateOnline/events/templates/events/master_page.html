@@ -27,7 +27,7 @@
                 {% if job.is_done %}
                 <a href="{% url 'evaluations' pk=job.id %}">
                 {% else %}
-                    {% if job.photo_1 %}
+                    {% if job.photos.count > 0 %}
                         <a>
                     {% else %}
                         <a href="{% url 'upload_photo' pk=job.id %}">
@@ -36,11 +36,10 @@
                     <div class="master__content">
                         <span class="master__number">№{{ job.id }}</span>
                         <div class="master__service-block">
-                            <p class="master__service">{{ job.category_nomination.nomination.name }}
-                                {{job.category_nomination.event_category.category.name}}</p>
+                            <p class="master__service">{{ job.category_nomination.nomination.name }}</p>
                             <span class="master__scores">
                                 {% if job.result_all == 0 %}
-                                    {% if job.photo_1 %}
+                                    {% if job.photos.count > 0 %}
                                         оценивается
                                     {% else %}
                                         {{ job.result_all }} б.
@@ -54,9 +53,9 @@
                                 {% endif %}
                             </span>
                         </div>
-                        {% if job.photo_1 %}
+                        {% if job.photo_count > 0 %}
                         <div class="master__avatar">
-                            <img class="master__avatar-img" src="{{ job.photo_1.url }}" alt="Фото модели">
+                            <img class="master__avatar-img" src="{{ job.photos.first.photo.url }}" alt="Фото модели">
                         </div>
                         {% else %}
                         <div class="master__avatar">
@@ -81,11 +80,11 @@
                         <p class="master__service">{{ other_job.category_nomination.nomination.name }}
                                 {{other_job.category_nomination.event_category.category.name}}</p>
                         <span class="master__scores">
-                                {{ other_job.result_all }}б.
+                                {{ other_job.result_all }} б.
                             </span>
                     </div>
                     <div class="master__avatar">
-                        <img class="master__avatar-img" src="{{ other_job.photo_1.url }}" alt="Фото модели">
+                        <img class="master__avatar-img" src="{{ other_job.photos.first.photo.url }}" alt="Фото модели">
                     </div>
                 </div>
             </a>

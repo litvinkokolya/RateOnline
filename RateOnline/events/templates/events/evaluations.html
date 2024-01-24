@@ -19,11 +19,34 @@
         </a>
         <h1 class="assessment__title">Оценки судей</h1>
         <p class="user-name">Мастер - {{job.member.user.first_name}} {{job.member.user.last_name}}</p>
-        {% if job.category_nomination.nomination.name in nominations_with_two_photo %}
-        {% include 'events/widgets/twomainphoto.html' %}
-        {% else %}
-        {% include 'events/widgets/onemainphoto.html' %}
-        {% endif %}
+                <ul class="assessment__before-after_list">
+    <li class="before-after__item">
+        <span>ДО</span>
+        <div>
+            {% for photo in photos.BE %}
+                <figure>
+                    <a href="{{ photo.url }}" data-lightbox="before/after">
+                        <img src="{{ photo.url }}" alt="">
+                    </a>
+                    <figcaption>{{ photo.name }}</figcaption>
+                </figure>
+            {% endfor %}
+        </div>
+    </li>
+    <li class="before-after__item">
+        <span>ПОСЛЕ</span>
+        <div>
+            {% for photo in photos.AF %}
+                <figure>
+                    <a href="{{ photo.url }}" data-lightbox="before/after">
+                        <img src="{{ photo.url }}" alt="">
+                    </a>
+                    <figcaption>{{ photo.name }}</figcaption>
+                </figure>
+            {% endfor %}
+        </div>
+    </li>
+</ul>
         <h2 class="assessment__service"> {{job.category_nomination.nomination.name}}
             {{job.category_nomination.event_category.category.name}} </h2>
         <div class="evaluations-form">
@@ -63,7 +86,6 @@
         </div>
     </div>
 </main>
-<script src="{% static 'lightbox2\js\lightbox-plus-jquery.js' %}"></script>
 <script src="js/evaluationsSize.js"></script>
 <script>
 

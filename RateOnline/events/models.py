@@ -1,12 +1,4 @@
 from django.db import models
-from django_resized import ResizedImageField
-
-
-class PlaceChoices(models.IntegerChoices):
-    FIRST = 1, 'Первое'
-    SECOND = 2, 'Второе'
-    THIRD = 3, 'Третье'
-
 
 class Category(models.Model):
     name = models.CharField(max_length=10,
@@ -30,6 +22,11 @@ class Nomination(models.Model):
                             help_text="Введите название номинации",
                             verbose_name="Название номинации")
 
+    photos_conf = models.JSONField(default=dict)
+
+    def get_photo_count(self):
+        return len(self.photos_conf["before"]) + len(self.photos_conf["after"])
+
     class Meta:
         verbose_name = 'Номинация'
         verbose_name_plural = 'Номинации'
@@ -40,7 +37,7 @@ class Nomination(models.Model):
 
 
 class NominationAttribute(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=150)
     nomination = models.ForeignKey('Nomination', models.PROTECT, related_name='attribute')
     max_score = models.IntegerField(default=5)
 
@@ -111,10 +108,6 @@ class CategoryNomination(models.Model):
 
 class MemberNomination(models.Model):
     member = models.ForeignKey('Member', models.PROTECT, related_name='membernom')
-    photo_1 = ResizedImageField(size=[1000, 1000], quality=100, null=True, blank=True)
-    photo_2 = ResizedImageField(size=[1000, 1000], quality=100, null=True, blank=True)
-    photo_3 = ResizedImageField(size=[1000, 1000], quality=100, null=True, blank=True)
-    photo_4 = ResizedImageField(size=[1000, 1000], quality=100, null=True, blank=True)
     category_nomination = models.ForeignKey('CategoryNomination', models.PROTECT, related_name='categ')
 
     class Meta:
@@ -131,25 +124,21 @@ class MemberNomination(models.Model):
         return f"{self.member} --- {self.category_nomination}"
 
 
-class WinnerNomination(models.Model):
-    member = models.ForeignKey('Member', models.PROTECT)
-    nomination = models.ForeignKey('Nomination', models.PROTECT)
-    category = models.ForeignKey('Category', models.PROTECT)
-    place = models.IntegerField(choices=PlaceChoices.choices)
+class MemberNominationPhoto(models.Model):
+    BEFORE = 'BE'
+    AFTER = 'AF'
+    BEFORE_AFTER_CHOICES = [
+        (BEFORE, 'До'),
+        (AFTER, 'После'),
+    ]
 
-    class Meta:
-        verbose_name = 'Победитель номинации'
-        verbose_name_plural = 'Победители номинации'
+    member_nomination = models.ForeignKey("MemberNomination", models.PROTECT, related_name='photos', default=None)
+    photo = models.ImageField()
+    before_after = models.CharField(max_length=2, choices=BEFORE_AFTER_CHOICES)
 
+    def __str__(self) -> str:
+        return f"{self.member_nomination}"
 
-class WinnerCategory(models.Model):
-    member = models.ForeignKey('Member', models.PROTECT)
-    category = models.ForeignKey('Category', models.PROTECT)
-    place = models.IntegerField(choices=PlaceChoices.choices)
-
-    class Meta:
-        verbose_name = 'Гран-при'
-        verbose_name_plural = 'Гран-при'
 
 
 class Result(models.Model):

@@ -1,12 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q, Sum, Max, F
+from django.db.models import Q, Sum, Max, F, Count
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 from events.mixins import PhotoRequiredMixin
 from events.models import MemberNomination, Result, NominationAttribute, EventStaff, CategoryNomination, Category, \
-    Member
-from .constants import *
+    Member, MemberNominationPhoto
+from .forms import UploadPhotoForm
+from django.forms import formset_factory
 
 
 class MasterPageView(LoginRequiredMixin, PhotoRequiredMixin, TemplateView):
@@ -14,16 +15,34 @@ class MasterPageView(LoginRequiredMixin, PhotoRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['my_jobs'] = MemberNomination.objects.select_related('category_nomination__nomination',
-                                                                  'category_nomination__event_category__category').filter(
-            member__user=self.request.user
-        ).annotate(result_all=Sum('results__score', default=0)).order_by('photo_1', 'result_all')
+        user = self.request.user
+        data['my_jobs'] = MemberNomination.objects.prefetch_related(
+            'category_nomination__nomination',
+            'category_nomination__event_category__category',
+            'photos'
+        ).filter(
+            member__user=user
+        ).annotate(
+            result_all=Sum('results__score', default=0, distinct=True),
+            photo_count=Count('photos', distinct=True)
+        ).order_by('photo_count', 'result_all')
+
+        for job in data['my_jobs']:
+            job.photo_1 = job.photos.first().photo if job.photos.exists() else None
 
         data['other_jobs'] = MemberNomination.objects.exclude(
-            Q(photo_1=None) | Q(photo_1='') | Q(member__user=self.request.user)).select_related(
+            Q(photos=None) | Q(member__user=user)).prefetch_related(
             'category_nomination__nomination',
-            'category_nomination__event_category__category').annotate(
-            result_all=Sum('results__score', default=0)).order_by('photo_1', 'result_all')
+            'category_nomination__event_category__category',
+            'photos'
+        ).annotate(
+            result_all=Sum('results__score', default=0, distinct=True),
+            photo_count=Sum('photos', distinct=True)
+        ).order_by('photo_count', 'result_all')
+
+        for job in data['other_jobs']:
+            job.photo_1 = job.photos.first().photo if job.photos.exists() else None
+
         return data
 
 
@@ -32,9 +51,11 @@ class RefereePageView(LoginRequiredMixin, PhotoRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['jobs'] = MemberNomination.objects.exclude(Q(photo_1=None) | Q(photo_1='')).select_related(
+        data['jobs'] = MemberNomination.objects.exclude(Q(photos=None)).prefetch_related(
             'category_nomination__nomination',
-            'category_nomination__event_category__category', ).filter(
+            'category_nomination__event_category__category',
+            'photos'
+        ).filter(
             category_nomination__staffs__user=self.request.user,
         ).annotate(
             results_for_staff=Sum('results__score', filter=Q(results__eventstaff__user=self.request.user), default=0),
@@ -42,28 +63,48 @@ class RefereePageView(LoginRequiredMixin, PhotoRequiredMixin, TemplateView):
         return data
 
 
-class UploadPhotoView(UpdateView):
+class UploadPhotoView(TemplateView):
     model = MemberNomination
     template_name = 'events/upload_photo.html'
-    fields = ['photo_1', 'photo_2', 'photo_3', 'photo_4']
+    form_class = UploadPhotoForm
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
 
-        data['job'] = MemberNomination.objects.exclude(photo_1=None).select_related('category_nomination__nomination',
-                                                                                    'category_nomination__event_category__category', ).filter(
+        data['job'] = MemberNomination.objects.prefetch_related('category_nomination__nomination',
+                                                                                    'category_nomination__event_category__category',
+                                                                                    'photos').filter(
             id=self.kwargs['pk']
         ).annotate(
             results_for_staff=Sum('results__score', filter=Q(results__eventstaff__user=self.request.user), default=0),
         ).order_by('results_for_staff').first()
-        data['nominations_with_two_photo'] = nominations_with_two_photo
+        formset=formset_factory(UploadPhotoForm, extra=MemberNomination.objects.get(id=self.kwargs['pk']).category_nomination.nomination.get_photo_count())
+        data['formset'] = formset
+        data['photos_conf'] = MemberNomination.objects.get(id=self.kwargs['pk']).category_nomination.nomination.photos_conf
         return data
 
-    def get_object(self, queryset=None):
-        return MemberNomination.objects.filter(pk=self.kwargs['pk']).first()
+    def post(self, request, *args, **kwargs):
+        photos_conf = MemberNomination.objects.get(id=self.kwargs['pk']).category_nomination.nomination.photos_conf
+        for index, file in request.FILES.items():
+            id_photo = index.split('_')[1]
+            for photo_type, photo_list in photos_conf.items():
+                for photo_data in photo_list:
+                    if str(photo_data['id']) == id_photo:
+                        if photo_type == 'before':
+                            MemberNominationPhoto.objects.create(
+                                member_nomination=MemberNomination.objects.get(id=self.kwargs['pk']),
+                                photo=file,
+                                before_after='BE'
+                            )
+                        elif photo_type == 'after':
+                            MemberNominationPhoto.objects.create(
+                                member_nomination=MemberNomination.objects.get(id=self.kwargs['pk']),
+                                photo=file,
+                                before_after='AF'
+                            )
+                        break  # совпадение id = выход
+        return redirect(reverse_lazy('master_page'))
 
-    def get_success_url(self):
-        return reverse_lazy('master_page')
 
 
 class RefereeAssessmentView(TemplateView):
@@ -75,19 +116,41 @@ class RefereeAssessmentView(TemplateView):
             nomination__nom__categ__id=self.kwargs['pk']
         )
 
-        data['job'] = MemberNomination.objects.exclude(photo_1=None).select_related('category_nomination__nomination',
-                                                                                    'category_nomination__event_category__category', ).filter(
+        data['job'] = MemberNomination.objects.exclude(photos=None).prefetch_related('category_nomination__nomination',
+                                                                                    'category_nomination__event_category__category',
+                                                                                   'photos'
+                                                                                   ).filter(
             id=self.kwargs['pk']
         ).annotate(
             results_for_staff=Sum('results__score', filter=Q(results__eventstaff__user=self.request.user), default=0),
         ).order_by('results_for_staff').first()
+        data['all_photos'] = data['job'].photos.all()
         data['scores'] = Result.objects.filter(eventstaff__user=self.request.user,
                                                membernomination=data['job']).first()
-        data['nominations_with_two_photo'] = nominations_with_two_photo
+        photo_conf = MemberNomination.objects.get(id=self.kwargs['pk']).category_nomination.nomination.photos_conf
+        data['all_photos'] = data['job'].photos.all()
+
+        name_dict = {photo['id']: photo['name'] for photo in photo_conf['before'] + photo_conf['after']}
+
+        photos = {'BE': [], 'AF': []}
+        i = 1
+        for photo in data['all_photos']:
+            photo_data = {
+                'id': photo.id,
+                'url': photo.photo.url,
+                'name': name_dict.get(i),
+            }
+            i += 1
+            photos[photo.before_after].append(photo_data)
+
+        data['photos'] = photos
+
         return data
 
     def post(self, request, *args, **kwargs):
         data = {**request.POST}
+        print(data.pop('csrfmiddlewaretoken'))
+        print(data)
         score = sum([int(x[0]) for x in data.values()])
         Result.objects.create(score=score, eventstaff=request.user.eventstaff_set.first(),
                               membernomination_id=self.kwargs['pk'], score_retail=data)
@@ -113,8 +176,25 @@ class EvaluationsView(TemplateView):
             scores.append({'values': score_row, 'name': attribute.name})
         data['scores'] = scores
         data['job'] = job
+        data['all_photos'] = data['job'].photos.all()
         data['user_request'] = self.request.user
-        data['nominations_with_two_photo'] = nominations_with_two_photo
+
+        photo_conf = nomination.photos_conf
+        name_dict = {photo['id']: photo['name'] for photo in photo_conf['before'] + photo_conf['after']}
+
+        photos = {'BE': [], 'AF': []}
+        i = 1
+        for photo in data['all_photos']:
+            photo_data = {
+                'id': photo.id,
+                'url': photo.photo.url,
+                'name': name_dict.get(i),
+            }
+            i += 1
+            photos[photo.before_after].append(photo_data)
+
+        data['photos'] = photos
+
         return data
 
 
@@ -128,15 +208,41 @@ class ResultOfAllEvents(TemplateView):
         nominations = CategoryNomination.objects.all()
         member_nominations_all = MemberNomination.objects.all().annotate(total_score=Sum('results__score')).order_by(
             '-total_score')
+
         for nomination in nominations:
             member_nominations = member_nominations_all.filter(category_nomination=nomination)
 
-            if member_nominations.exists():
+            if member_nominations.count() >= 4:
                 top_three = member_nominations[:3]
+                win_nominations[nomination] = top_three
+
+                for member_nomination in top_three:
+                    countResults = Result.objects.filter(membernomination=member_nomination).count()
+                    num_scores = member_nomination.results.annotate(num_scores=Count('id')).values('num_scores').first()
+                    if num_scores:
+                        member_nomination.average_score = round(member_nomination.total_score / countResults, 2)
+                    else:
+                        member_nomination.average_score = 0
+
                 win_nominations[nomination] = top_three
 
         data['win_nominations'] = win_nominations
 
+
+# БЛОК 2 НОМИНЦА
+        members_with_two_nominations = Member.objects.annotate(num_membernominations=Count('membernom')).filter(num_membernominations=2)
+        winner_with_two_nominations = {}
+
+        for member in members_with_two_nominations:
+            member_nomination_winner_two_nominations = MemberNomination.objects.filter(member=member).annotate(
+                total_score=Sum('results__score')).order_by('-total_score')
+
+        winner_with_two_nominations[member]=member_nomination_winner_two_nominations
+
+
+
+
+# ВЫИГРАННЫЕ КАТЕГОРИИ (ГРАН-ПРИ)
         win_categories = {}
         categories = Category.objects.all()
 

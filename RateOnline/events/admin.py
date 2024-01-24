@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from django_json_widget.widgets import JSONEditorWidget
 from users.models import User
 from .models import *
 
@@ -15,6 +15,9 @@ class NominationAttributeInline(admin.TabularInline):
 
 @admin.register(Nomination)
 class NominationAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.JSONField: {'widget': JSONEditorWidget}
+    }
     inlines = [NominationAttributeInline]
 
 
@@ -48,19 +51,17 @@ class CategoryNominationAdmin(admin.ModelAdmin):
 
 @admin.register(MemberNomination)
 class MemberNominationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'member', 'category_nomination', 'photo_1')
+    list_display = ('id', 'member', 'category_nomination')
     list_display_links = ('id', 'member', 'category_nomination')
     ordering = ['id']
 
 
-@admin.register(WinnerNomination)
-class WinnerNominationAdmin(admin.ModelAdmin):
-    pass
+@admin.register(MemberNominationPhoto)
+class MemberNominationPhotoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'member_nomination', 'photo')
+    list_display_links = ('id', 'member_nomination', 'photo')
+    ordering = ['member_nomination']
 
-
-@admin.register(WinnerCategory)
-class WinnerCategoryAdmin(admin.ModelAdmin):
-    pass
 
 
 @admin.register(EventStaff)

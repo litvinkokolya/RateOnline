@@ -9,8 +9,6 @@ const ballsModal = document.getElementById('ballsModal')
 let numberBalls = 0;
 let modalBtn = document.querySelector('.open-modal')
 
-
-
 window.onload=function(){
   window.scrollBy(0, 30);
 }

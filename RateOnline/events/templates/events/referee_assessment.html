@@ -18,11 +18,34 @@
             Назад
         </a>
         <h1 class="assessment__title">Оцените участника</h1>
-        {% if job.category_nomination.nomination.name in nominations_with_two_photo %}
-        {% include 'events/widgets/twomainphoto.html' %}
-        {% else %}
-        {% include 'events/widgets/onemainphoto.html' %}
-        {% endif %}
+        <ul class="assessment__before-after_list">
+            <li class="before-after__item">
+                <span>ДО</span>
+                <div>
+                    {% for photo in photos.BE %}
+                    <figure>
+                        <a href="{{ photo.url }}" data-lightbox="before/after">
+                            <img src="{{ photo.url }}" alt="">
+                        </a>
+                        <figcaption>{{ photo.name }}</figcaption>
+                    </figure>
+                {% endfor %}
+                </div>
+            </li>
+            <li class="before-after__item">
+                <span>ПОСЛЕ</span>
+                <div>
+                    {% for photo in photos.AF %}
+                    <figure>
+                        <a href="{{ photo.url }}" data-lightbox="before/after">
+                            <img src="{{ photo.url }}" alt="">
+                        </a>
+                        <figcaption>{{ photo.name }}</figcaption>
+                    </figure>
+                {% endfor %}
+                </div>
+            </li>
+        </ul>
         <h2 class="assessment__service">{{job.category_nomination.nomination.name}}
             {{job.category_nomination.event_category.category.name}}</h2>
         <form class="evaluations-form">
@@ -35,24 +58,13 @@
                         {% with ''|center:attribute.max_score as range %}
                         {% for _ in range %}
                         <label>
-                            {% if attribute.name != 'Работа со сложностью' %}
                             <input required class="evulation-radio visually-hidden" value="{{forloop.counter}}"
                                    type="radio"
                                    {% if job.results_for_staff %}
                                    {% get_score scores.score_retail attribute.name forloop.counter %}
                                    {% endif %}
                                    name="{{attribute.name}}">
-                            <span>{{forloop.counter}}</span>
-                            {% else %}
-                            <input required class="evulation-radio visually-hidden evaluation--complexity"
-                                   value="{{forloop.counter0}}"
-                                   type="radio"
-                                   {% if job.results_for_staff %}
-                                   {% get_score scores.score_retail attribute.name forloop.counter0 %}
-                                   {% endif %}
-                                   name="{{attribute.name}}">
                             <span>{{forloop.counter0}}</span>
-                            {% endif %}
                         </label>
                         {% endfor %}
                         {% endwith %}
@@ -78,18 +90,16 @@
         <div class="before-after__item">
             <span>ПОСЛЕ</span>
             <div>
-                <figure>
-                    <a href="{{ job.photo_3.url }}" data-lightbox="after-model">
-                        <img src="{{ job.photo_3.url }}" alt="">
-                    </a>
-                    <figcaption>лицо</figcaption>
-                </figure>
-                <figure>
-                    <a href="{{ job.photo_4.url }}" data-lightbox="after-model">
-                        <img src="{{ job.photo_4.url }}" alt="">
-                    </a>
-                    <figcaption>зона ПМ</figcaption>
-                </figure>
+                {% for photo in all_photos %}
+                    {% if photo.before_after == 'AF' %}
+                 <figure>
+                        <a href="{{ photo.photo.url }}" data-lightbox="before/after">
+                            <img src="{{ photo.photo.url }}" alt="">
+                        </a>
+                        <figcaption></figcaption>
+                    </figure>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
         <h2 class="assessment__service" style="margin-top: 10px;">{{job.category_nomination.nomination.name}}
@@ -134,18 +144,18 @@
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="{% static 'js/judgeScript.js' %}"></script>
-<script src="{% static 'lightbox2\js\lightbox-plus-jquery.js' %}"></script>
-<script>
-    lightbox.option({
-        'albumLabel': "%1 %2",
-        'alwaysShowNavOnTouchDevices': true,
-        'fadeDuration': 0,
-        'imageFadeDuration': 0,
-        'resizeDuration': 0,
-        'wrapAround': true
-    })
-
-
-</script>
+{#<script src="{% static 'lightbox2\js\lightbox-plus-jquery.js' %}"></script>#}
+{#<script>#}
+{#    lightbox.option({#}
+{#        'albumLabel': "%1 %2",#}
+{#        'alwaysShowNavOnTouchDevices': true,#}
+{#        'fadeDuration': 0,#}
+{#        'imageFadeDuration': 0,#}
+{#        'resizeDuration': 0,#}
+{#        'wrapAround': true#}
+{#    })#}
+{##}
+{##}
+{#</script>#}
 </body>
 </html>
