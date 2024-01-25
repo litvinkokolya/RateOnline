@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 from events.mixins import PhotoRequiredMixin
 from events.models import MemberNomination, Result, NominationAttribute, EventStaff, CategoryNomination, Category, \
-    Member, MemberNominationPhoto
+    Member, MemberNominationPhoto, Event
 from .forms import UploadPhotoForm
 from django.forms import formset_factory
 
@@ -230,14 +230,48 @@ class ResultOfAllEvents(TemplateView):
 
 
 # БЛОК 2 НОМИНЦА
-        members_with_two_nominations = Member.objects.annotate(num_membernominations=Count('membernom')).filter(num_membernominations=2)
-        winner_with_two_nominations = {}
+        def get_members(event):
+            return (
+                Member.objects.filter(event=event)
+                .annotate(count_nom=Count("membernom"))
+                .filter(count_nom=2)
+            )
 
-        for member in members_with_two_nominations:
-            member_nomination_winner_two_nominations = MemberNomination.objects.filter(member=member).annotate(
-                total_score=Sum('results__score')).order_by('-total_score')
+        def get_members_gte_3(event):
+            return (
+                Member.objects.filter(event=event)
+                .annotate(count_nom=Count("membernom"))
+                .filter(count_nom__gte=3)
+            )
 
-        winner_with_two_nominations[member]=member_nomination_winner_two_nominations
+        def get_sorted_members(members):
+            return members.annotate(
+                total_score=Sum("membernom__results__score")
+            ).order_by("-total_score")
+
+        def get_sorted_members_for_top3(members):
+            members = members.prefetch_related("membernom__category_nomination__nomination", "membernom__results")
+            members_with_scores = {}
+
+            for member in members:
+                top_3_nominations = member.membernom.annotate(
+                    total_score=Sum("results__score")
+                ).order_by("-total_score")[:3]
+                total_score = sum(nomination.total_score for nomination in top_3_nominations)
+                members_with_scores[member.id] = total_score
+
+            sorted_members = sorted(
+                members_with_scores.items(), key=lambda x: x[1], reverse=True
+            )[:3]
+            return [member_id for member_id, _ in sorted_members]
+
+        event = Event.objects.first()
+        winner_two_nominations = get_sorted_members(get_members(event)).first()
+        winner_id_for_three = get_sorted_members_for_top3(get_members_gte_3(event))[0]
+        winner_for_three = Member.objects.get(id=winner_id_for_three)
+
+        data['winner_two_nominations'] = winner_two_nominations
+        data['winner_for_three'] = winner_for_three
 
 
 
