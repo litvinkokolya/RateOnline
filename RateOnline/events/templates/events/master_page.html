@@ -4,10 +4,8 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <title>Мастер</title>
@@ -16,7 +14,9 @@
 <body class="master-page-body">
 <main class="main">
     <div class="container">
-        <img class="user-avatar" src="{{ request.user.image.url }}" alt="Аватар Мастера">
+        <a href="{{ request.user.image.url }}" class="fancybox">
+             <img class="user-avatar" src="{{ request.user.image.url }}" alt="Аватар Мастера">
+        </a>
         <p class="user-name">{{request.user.first_name}} {{request.user.last_name}}</p>
         <h1 class="user-post">Мастер</h1>
         <p class="user-action">Выберите модель, с которой работаете</p>
@@ -67,7 +67,7 @@
             </li>
             {% endfor %}
         </ul>
-        {% if other_jobs %}
+        {% if other_jobs.is_done %}
      <p class="user-action">Работы других мастеров</p>
         <ul class="masters-list masters-list--other">
             {% for other_job in other_jobs %}
@@ -95,5 +95,20 @@
         {% endif %}
     </div>
 </main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".fancybox").fancybox({
+            buttons: [
+                "close"
+            ],
+            touch: {
+                vertical: true,
+                momentum: false
+            }
+        });
+    });
+</script>
 </body>
 </html>

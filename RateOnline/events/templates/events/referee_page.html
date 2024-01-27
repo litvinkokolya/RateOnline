@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -13,7 +14,9 @@
 <body class="judge-page-body">
 <main class="main">
     <div class="container">
-        <img class="user-avatar" src="{{ request.user.image.url }}" alt="Аватар Судьи">
+        <a href="{{ request.user.image.url }}" class="fancybox">
+            <img class="user-avatar" src="{{ request.user.image.url }}" alt="Аватар Судьи">
+        </a>
         <p class="user-name">{{request.user.first_name}} {{request.user.last_name}}</p>
         <h1 class="user-post">Судья</h1>
         <p class="user-action">Выберите модель для оценки работы</p>
@@ -41,7 +44,21 @@
     </div>
 </main>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".fancybox").fancybox({
+            buttons: [
+                "close"
+            ],
+            touch: {
+                vertical: true,
+                momentum: false
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

@@ -24,7 +24,7 @@
         <form method="post" enctype="multipart/form-data" class="avtorization__form photo-selection__form">
             {% csrf_token %}
             <label class="avtorization__label photo-selection__label">Загрузите ваше лучшее фото Профиля</label>
-            <img id="image" style="border-radius: 80%;">
+            <img id="image" style="border-radius: 80%; object-fit: cover">
             <label class="input-file">
                 <input id="myuploader" name="image" type="file" accept="image/jpg, image/jpeg, image/png, image/svg">
                 <span>Выбрать Фото</span>

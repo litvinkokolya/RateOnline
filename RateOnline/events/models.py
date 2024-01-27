@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import constraints
 
 class Category(models.Model):
     name = models.CharField(max_length=10,
@@ -147,9 +148,11 @@ class Result(models.Model):
     eventstaff = models.ForeignKey('EventStaff', models.PROTECT)
     score_retail = models.JSONField(default=None, null=True)
 
+
     class Meta:
         verbose_name = 'Оценка'
         verbose_name_plural = 'Оценки'
+        constraints = [constraints.UniqueConstraint("membernomination", "eventstaff", name="unique_lower_name_category")]
 
     def __str__(self) -> str:
         return f"{self.score} --- {self.membernomination}"

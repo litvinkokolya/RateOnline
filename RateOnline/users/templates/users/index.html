@@ -17,7 +17,7 @@
         <form method="post" class="avtorization__form">
             {% csrf_token %}
             <label class="avtorization__label" for="message-code">Введите свой номер телефона, чтобы войти</label>
-            <input name="phone" class="avtorization__input" type="tel" id="message-code" placeholder="79885151555" pattern="[7-8]{1}[0-9]{10}">
+            <input name="phone" class="avtorization__input" type="tel" maxlength="11" id="message-code" placeholder="79885151555" pattern="[7-8]{1}[0-9]{10}">
             {% if messages %}
             <ul class="messages">
                 {% for message in messages %}

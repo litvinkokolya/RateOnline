@@ -20,7 +20,7 @@
             <label class="avtorization__label confirmation__label" for="message-code">Введите свой код из звонка,
                 чтобы
                 войти</label>
-            <input name="password" class="avtorization__input confirmation-input" type="text" id="message-code"
+            <input name="password" class="avtorization__input confirmation-input" maxlength="4" type="text" id="message-code"
                    placeholder="Код из телефонного звонка" pattern="[0-9]{4}">
             <input type="hidden" name="phone" value="{{phone}}">
             {% if messages %}

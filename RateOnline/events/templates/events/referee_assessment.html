@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="{% static 'lightbox2\css/lightbox.min.css' %}" rel="stylesheet"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Оценка участника</title>
 </head>
@@ -24,8 +24,8 @@
                 <div>
                     {% for photo in photos.BE %}
                     <figure>
-                        <a href="{{ photo.url }}" data-lightbox="before/after">
-                            <img src="{{ photo.url }}" alt="">
+                        <a href="{{ photo.url }}" class="fancybox">
+                            <img src="{{ photo.url }}" alt="{{ photo.name }}">
                         </a>
                         <figcaption>{{ photo.name }}</figcaption>
                     </figure>
@@ -36,9 +36,9 @@
                 <span>ПОСЛЕ</span>
                 <div>
                     {% for photo in photos.AF %}
-                    <figure>
-                        <a href="{{ photo.url }}" data-lightbox="before/after">
-                            <img src="{{ photo.url }}" alt="">
+                      <figure>
+                        <a href="{{ photo.url }}" class="fancybox">
+                            <img src="{{ photo.url }}" alt="{{ photo.name }}">
                         </a>
                         <figcaption>{{ photo.name }}</figcaption>
                     </figure>
@@ -58,10 +58,10 @@
                         {% with ''|center:attribute.max_score as range %}
                         {% for _ in range %}
                         <label>
-                            <input required class="evulation-radio visually-hidden" value="{{forloop.counter}}"
+                            <input required class="evulation-radio visually-hidden" value="{{forloop.counter0}}"
                                    type="radio"
                                    {% if job.results_for_staff %}
-                                   {% get_score scores.score_retail attribute.name forloop.counter %}
+                                   {% get_score scores.score_retail attribute.name forloop.counter0 %}
                                    {% endif %}
                                    name="{{attribute.name}}">
                             <span>{{forloop.counter0}}</span>
@@ -93,7 +93,7 @@
                 {% for photo in all_photos %}
                     {% if photo.before_after == 'AF' %}
                  <figure>
-                        <a href="{{ photo.photo.url }}" data-lightbox="before/after">
+                        <a href="{{ photo.photo.url }}" class="fancybox">
                             <img src="{{ photo.photo.url }}" alt="">
                         </a>
                         <figcaption></figcaption>
@@ -143,19 +143,21 @@
 
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".fancybox").fancybox({
+            buttons: [
+                "close"
+            ],
+            touch: {
+                vertical: true,
+                momentum: false
+            }
+        });
+    });
+</script>
 <script src="{% static 'js/judgeScript.js' %}"></script>
-{#<script src="{% static 'lightbox2\js\lightbox-plus-jquery.js' %}"></script>#}
-{#<script>#}
-{#    lightbox.option({#}
-{#        'albumLabel': "%1 %2",#}
-{#        'alwaysShowNavOnTouchDevices': true,#}
-{#        'fadeDuration': 0,#}
-{#        'imageFadeDuration': 0,#}
-{#        'resizeDuration': 0,#}
-{#        'wrapAround': true#}
-{#    })#}
-{##}
-{##}
-{#</script>#}
+
 </body>
 </html>
