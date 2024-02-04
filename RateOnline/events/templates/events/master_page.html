@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,24 +15,24 @@
 <main class="main">
     <div class="container">
         <a href="{{ request.user.image.url }}" class="fancybox">
-             <img class="user-avatar" src="{{ request.user.image.url }}" alt="Аватар Мастера">
+            <img class="user-avatar" src="{{ request.user.image.url }}" alt="Аватар Мастера">
         </a>
-        <p class="user-name">{{request.user.first_name}} {{request.user.last_name}}</p>
+        <p class="user-name">{{ request.user.first_name }} {{ request.user.last_name }}</p>
         <h1 class="user-post">Мастер</h1>
         <p class="user-action">Выберите модель, с которой работаете</p>
         <ul class="masters-list">
             {% for job in my_jobs %}
-            <li class="master
+                <li class="master
             {% if job.is_done %} master--rated{% endif %}">
-                {% if job.is_done %}
-                <a href="{% url 'evaluations' pk=job.id %}">
-                {% else %}
-                    {% if job.photos.count > 0 %}
-                        <a>
+                    {% if job.is_done %}
+                        <a href="{% url 'evaluations' pk=job.id %}">
                     {% else %}
-                        <a href="{% url 'upload_photo' pk=job.id %}">
+                        {% if job.photos.count > 0 %}
+                            <a>
+                        {% else %}
+                            <a href="{% url 'upload_photo' pk=job.id %}">
+                        {% endif %}
                     {% endif %}
-                {% endif %}
                     <div class="master__content">
                         <span class="master__number">№{{ job.id }}</span>
                         <div class="master__service-block">
@@ -54,45 +54,47 @@
                             </span>
                         </div>
                         {% if job.photo_count > 0 %}
-                        <div class="master__avatar">
-                            <img class="master__avatar-img" src="{{ job.photos.first.photo.url }}" alt="Фото модели">
-                        </div>
+                            <div class="master__avatar">
+                                <img class="master__avatar-img" src="{{ job.photos.first.photo.url }}"
+                                     alt="Фото модели">
+                            </div>
                         {% else %}
-                        <div class="master__avatar">
-                            <img class="master__avatar-img" src="{% static 'img/unknown-logo.svg' %}" alt="Фото модели">
-                        </div>
+                            <div class="master__avatar">
+                                <img class="master__avatar-img" src="{% static 'img/unknown-logo.svg' %}"
+                                     alt="Фото модели">
+                            </div>
                         {% endif %}
                     </div>
-                </a>
-            </li>
+                    </a>
+                </li>
             {% endfor %}
         </ul>
-        {% if other_jobs.is_done %}
-     <p class="user-action">Работы других мастеров</p>
-        <ul class="masters-list masters-list--other">
-            {% for other_job in other_jobs %}
-            {% if other_job.is_done %}
-        <li class="master">
-            <a href="{% url 'evaluations' pk=other_job.id %}">
-                <div class="master__content">
-                    <span class="master__number">№{{other_job.id}}</span>
-                    <div class="master__service-block">
-                        <p class="master__service">{{ other_job.category_nomination.nomination.name }}
-                                {{other_job.category_nomination.event_category.category.name}}</p>
-                        <span class="master__scores">
-                                {{ other_job.result_all }} б.
-                            </span>
-                    </div>
-                    <div class="master__avatar">
-                        <img class="master__avatar-img" src="{{ other_job.photos.first.photo.url }}" alt="Фото модели">
-                    </div>
-                </div>
-            </a>
-        </li>
-            {% endif %}
-            {% endfor %}
-      </ul>
-        {% endif %}
+        {#        {% if other_jobs.is_done %}#}
+        {#     <p class="user-action">Работы других мастеров</p>#}
+        {#        <ul class="masters-list masters-list--other">#}
+        {#            {% for other_job in other_jobs %}#}
+        {#            {% if other_job.is_done %}#}
+        {#        <li class="master">#}
+        {#            <a href="{% url 'evaluations' pk=other_job.id %}">#}
+        {#                <div class="master__content">#}
+        {#                    <span class="master__number">№{{other_job.id}}</span>#}
+        {#                    <div class="master__service-block">#}
+        {#                        <p class="master__service">{{ other_job.category_nomination.nomination.name }}#}
+        {#                                {{other_job.category_nomination.event_category.category.name}}</p>#}
+        {#                        <span class="master__scores">#}
+        {#                                {{ other_job.result_all }} б.#}
+        {#                            </span>#}
+        {#                    </div>#}
+        {#                    <div class="master__avatar">#}
+        {#                        <img class="master__avatar-img" src="{{ other_job.photos.first.photo.url }}" alt="Фото модели">#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </a>#}
+        {#        </li>#}
+        {#            {% endif %}#}
+        {#            {% endfor %}#}
+        {#      </ul>#}
+        {#        {% endif %}#}
     </div>
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
