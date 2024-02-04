@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/normilize.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Оценка участника</title>
@@ -24,90 +24,85 @@
                 <span>ДО</span>
                 <div>
                     {% for photo in photos.BE %}
-                    <figure>
-                        <a href="{{ photo.url }}" class="fancybox">
-                            <img src="{{ photo.url }}" alt="{{ photo.name }}">
-                        </a>
-                        <figcaption>{{ photo.name }}</figcaption>
-                    </figure>
-                {% endfor %}
+                        <figure>
+                            <a href="{{ photo.url }}" class="fancybox">
+                                <img src="{{ photo.url }}" alt="{{ photo.name }}">
+                            </a>
+                            <figcaption>{{ photo.name }}</figcaption>
+                        </figure>
+                    {% endfor %}
                 </div>
             </li>
             <li class="before-after__item">
                 <span>ПОСЛЕ</span>
                 <div>
                     {% for photo in photos.AF %}
-                      <figure>
-                        <a href="{{ photo.url }}" class="fancybox">
-                            <img src="{{ photo.url }}" alt="{{ photo.name }}">
-                        </a>
-                        <figcaption>{{ photo.name }}</figcaption>
-                    </figure>
-                {% endfor %}
+                        <figure>
+                            <a href="{{ photo.url }}" class="fancybox">
+                                <img src="{{ photo.url }}" alt="{{ photo.name }}">
+                            </a>
+                            <figcaption>{{ photo.name }}</figcaption>
+                        </figure>
+                    {% endfor %}
                 </div>
             </li>
         </ul>
-        <h2 class="assessment__service">{{job.category_nomination.nomination.name}}
-            {{job.category_nomination.event_category.category.name}}</h2>
+        <h2 class="assessment__service">{{ job.category_nomination.nomination.name }}
+            {{ job.category_nomination.event_category.category.name }}</h2>
         <form class="evaluations-form">
             {% csrf_token %}
             <ul class="evaluations-list">
                 {% for attribute in attributes %}
-                <li class="evaluations-item">
-                    <p class="evaluations-name">{{attribute.name}}</p>
-                    <div class="evaluations-block">
-                        {% with ''|center:attribute.max_score as range %}
-                        {% for _ in range %}
-                        <label>
-                            <input required class="evulation-radio visually-hidden" value="{{forloop.counter0}}"
-                                   type="radio"
-                                   {% if job.results_for_staff %}
-                                   {% get_score scores.score_retail attribute.name forloop.counter0 %}
-                                   {% endif %}
-                                   name="{{attribute.name}}">
-                            <span>{{forloop.counter0}}</span>
-                        </label>
-                        {% endfor %}
-                        {% endwith %}
-                    </div>
-                </li>
+                    <li class="evaluations-item">
+                        <p class="evaluations-name">{{ attribute.name }}</p>
+                        <div class="evaluations-block">
+                            {% with ''|center:attribute.max_score as range %}
+                                {% for _ in range %}
+                                    <label>
+                                        <input required class="evulation-radio visually-hidden"
+                                               value="{{ forloop.counter0 }}"
+                                               type="radio"
+                                                {% if job.results_for_staff %}
+                                                    {% get_score scores.score_retail attribute.name forloop.counter0 %}
+                                                {% endif %}
+                                               name="{{ attribute.name }}">
+                                        <span>{{ forloop.counter0 }}</span>
+                                    </label>
+                                {% endfor %}
+                            {% endwith %}
+                        </div>
+                    </li>
                 {% endfor %}
             </ul>
             <p class="total-points">Сумма баллов: <span id="balls">0</span></p>
             {% if job.results_for_staff == 0 %}
-            <button type="button" class="total-points-button open-modal">Подтвердить</button>
+                <button type="button" class="total-points-button open-modal">Подтвердить</button>
             {% else %}
-            <button style="display: none" type="button" class="total-points-button open-modal">Подтвердить</button>
+                <button style="display: none" type="button" class="total-points-button open-modal">Подтвердить</button>
             {% endif %}
         </form>
     </div>
     <div class="judge-modal visually-hidden">
-        <button type="button" class="close-judge-modal">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
-                <path d="M1.35492 14.438L14.938 0.85491M1.35352 0.646484L14.9366 14.2296" stroke="black"
-                      stroke-linecap="round"/>
-            </svg>
-        </button>
         <div class="before-after__item">
             <span>ПОСЛЕ</span>
             <div>
                 {% for photo in all_photos %}
                     {% if photo.before_after == 'AF' %}
-                 <figure>
-                        <a href="{{ photo.photo.url }}" class="fancybox">
-                            <img src="{{ photo.photo.url }}" alt="">
-                        </a>
-                        <figcaption></figcaption>
-                    </figure>
+                        <figure>
+                            <a href="{{ photo.photo.url }}" class="fancybox">
+                                <img src="{{ photo.photo.url }}" alt="">
+                            </a>
+                            <figcaption></figcaption>
+                        </figure>
                     {% endif %}
                 {% endfor %}
             </div>
         </div>
-        <h2 class="assessment__service" style="margin-top: 10px;">{{job.category_nomination.nomination.name}}
-            {{job.category_nomination.event_category.category.name}}</h2>
+        <h2 class="assessment__service" style="margin-top: 10px;">{{ job.category_nomination.nomination.name }}
+            {{ job.category_nomination.event_category.category.name }}</h2>
         <p class="total-points" style="margin-top: -15px;">Сумма баллов: <span id="ballsModal">27</span></p>
         <p class="total-points" style="margin-top: -15px;">Дать комментарий <a id="whatsapphref"
-                                                                               href="https://api.whatsapp.com/send/?phone={{job.member.user.phone_number}}&text=Добрый день, {{job.member.user.first_name}}!+Я+оценила+вашу+работу+в+номинации+{{job.category_nomination.nomination.name}}.">
+                                                                               href="https://api.whatsapp.com/send/?phone={{ job.member.user.phone_number }}&text=Добрый день, {{ job.member.user.first_name }}!+Я+оценила+вашу+работу+в+номинации+{{ job.category_nomination.nomination.name }}.">
             <img
                     class="whatsApp-logo"
                     src="{% static 'img/whatsApp.png' %}"></a>
@@ -115,7 +110,7 @@
         <form action="" method="post">
             {% csrf_token %}
             {% for attribute in attributes %}
-            <input class="attributeValue" name="{{attribute.name}}" id="{{attribute.name}}" type="hidden">
+                <input class="attributeValue" name="{{ attribute.name }}" id="{{ attribute.name }}" type="hidden">
             {% endfor %}
             <button id="send" type="submit" class="total-points-button">Отправить</button>
         </form>
