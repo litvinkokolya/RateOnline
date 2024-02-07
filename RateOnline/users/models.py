@@ -4,7 +4,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    image = ResizedImageField(size=[500, 500], quality=75, upload_to='images/', null=True, blank=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
 
     phone_number = models.CharField(max_length=11,
                                     help_text="Введите номер телефона пользователя",

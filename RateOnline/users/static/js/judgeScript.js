@@ -47,11 +47,6 @@ modalBtn.addEventListener('click', function() {
     }
   });
 
-closeBtn.addEventListener('click', function() {
-  modal.classList.add('visually-hidden');
-  blur.classList.add('visually-hidden')
-});
-
 let calc = {
   summ: 0, // сумма изначально 0
   valueArray: (function () { //массив изначально создается на основе данных value выбранных кнопок
