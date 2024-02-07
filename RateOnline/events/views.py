@@ -257,7 +257,7 @@ class ResultOfAllEvents(TemplateView):
                 top_3_nominations = member.membernom.annotate(
                     total_score=Sum("results__score")
                 ).order_by("-total_score")[:3]
-                total_score = sum(nomination.total_score for nomination in top_3_nominations)
+                total_score = sum(nomination.total_score or 0 for nomination in top_3_nominations)
                 members_with_scores[member.id] = total_score
 
             sorted_members = sorted(
